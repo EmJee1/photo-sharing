@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,6 +18,8 @@ type User struct {
 
 func main() {
 	e := echo.New()
+
+	e.Renderer = echoview.Default()
 
 	dsn := "host=localhost user=postgres password=password dbname=postgres port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

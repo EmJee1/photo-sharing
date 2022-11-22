@@ -6,5 +6,5 @@ import (
 )
 
 func Homepage(context echo.Context) error {
-	return context.String(http.StatusOK, "Hello, World!")
+	return context.Render(http.StatusOK, "Homepage.html", echo.Map{"name": "Homepage :-)"})
 }
