@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
+	"photo-sharing/model"
 	"photo-sharing/util"
 )
 
@@ -20,7 +21,7 @@ func PostRegister(context echo.Context) error {
 		return context.Render(http.StatusInternalServerError, "Register.html", echo.Map{})
 	}
 
-	db.DB.Create(&User{Email: email, Password: passwordHash})
+	db.DB.Create(&model.User{Email: email, Password: passwordHash})
 
 	// TODO: auto-login after account creation
 	return context.Render(http.StatusOK, "Login.html", echo.Map{})

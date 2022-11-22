@@ -3,15 +3,8 @@ package db
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"time"
+	"photo-sharing/model"
 )
-
-type User struct {
-	ID        uint
-	Email     string
-	Password  string
-	CreatedAt time.Time
-}
 
 var DB *gorm.DB
 
@@ -29,5 +22,5 @@ func Open() error {
 }
 
 func AutoMigrate() {
-	DB.AutoMigrate(&User{})
+	DB.AutoMigrate(&model.User{})
 }
