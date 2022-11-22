@@ -28,9 +28,7 @@ func main() {
 	db.Create(&User{UserName: "Mart-Jan"})
 
 	// TODO: add is-logged-in middleware
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, Slash!")
-	})
+	e.GET("/", handlers.Homepage)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
