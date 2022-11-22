@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
+	"photo-sharing/util"
 	"time"
 )
 
@@ -23,10 +23,11 @@ func PostLogin(context echo.Context) error {
 	email := context.FormValue("email")
 	password := context.FormValue("password")
 
-	fmt.Printf("Email: %s \n", email)
-	fmt.Printf("Password: %s \n", password)
-
-	db.DB.Find(&User{Email: email})
+	user := &User{}
+	db.DB.Where("email = ?", email).First(&user)
+	if user == nil || !util.CheckPasswordHash(password, user.Password) {
+		return context.Render(http.StatusUnauthorized, "Login.html", echo.Map{"error": "Invalid username & password combination"})
+	}
 
 	return context.Render(http.StatusOK, "Login.html", echo.Map{})
 }
