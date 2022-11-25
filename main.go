@@ -20,7 +20,8 @@ func main() {
 	})
 
 	e.Use(mw)
-	e.Static("/static", "static")
+	e.Static("/css", "static/css")
+	e.Static("/js", "static/js")
 
 	if err := db.Open(); err != nil {
 		log.Fatal("Could not connect to database")
