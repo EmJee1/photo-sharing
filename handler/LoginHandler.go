@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
@@ -9,7 +10,7 @@ import (
 )
 
 func GetLogin(context echo.Context) error {
-	return context.Render(http.StatusOK, "Login.html", echo.Map{})
+	return echoview.Render(context, http.StatusOK, "Login", echo.Map{})
 }
 
 func PostLogin(context echo.Context) error {

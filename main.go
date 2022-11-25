@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"log"
@@ -11,7 +12,14 @@ import (
 func main() {
 	e := echo.New()
 
-	e.Renderer = echoview.Default()
+	mw := echoview.NewMiddleware(goview.Config{
+		Root:         "views",
+		Extension:    ".html",
+		Master:       "layouts/master",
+		DisableCache: true,
+	})
+
+	e.Use(mw)
 
 	if err := db.Open(); err != nil {
 		log.Fatal("Could not connect to database")

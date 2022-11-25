@@ -1,10 +1,13 @@
 package handler
 
 import (
+	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 func GetHomepage(context echo.Context) error {
-	return context.Render(http.StatusOK, "Homepage.html", echo.Map{})
+	return echoview.Render(context, http.StatusOK, "Homepage", echo.Map{
+		"title": "Hello, World!",
+	})
 }
