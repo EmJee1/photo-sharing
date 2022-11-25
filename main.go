@@ -20,6 +20,7 @@ func main() {
 	})
 
 	e.Use(mw)
+	e.Static("/static", "static")
 
 	if err := db.Open(); err != nil {
 		log.Fatal("Could not connect to database")
