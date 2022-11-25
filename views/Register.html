@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Login</title>
-</head>
-<body>
-<div>
-	<h1>Registreren</h1>
-	<form action="/register" method="post">
-		<label for="email">Email</label>
-		<input type="email" name="email" id="email">
-		<label for="password">Password</label>
-		<input type="password" name="password" id="password">
-		<button type="submit">Submit</button>
-	</form>
-</div>
-</body>
-</html>
+{{define "content"}}
+<h1>Registreren</h1>
+<form action="/register" method="post">
+	<label for="email">Email</label>
+	<input type="email" name="email" id="email">
+	<label for="password">Password</label>
+	<input type="password" name="password" id="password">
+	<button type="submit">Submit</button>
+</form>
+{{end}}

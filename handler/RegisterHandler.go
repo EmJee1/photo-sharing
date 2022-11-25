@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
@@ -9,7 +10,9 @@ import (
 )
 
 func GetRegister(context echo.Context) error {
-	return context.Render(http.StatusOK, "Register.html", echo.Map{})
+	return echoview.Render(context, http.StatusOK, "Register", echo.Map{
+		"title": "Login",
+	})
 }
 
 func PostRegister(context echo.Context) error {
@@ -18,11 +21,15 @@ func PostRegister(context echo.Context) error {
 
 	passwordHash, err := util.HashPassword(password)
 	if err != nil {
-		return context.Render(http.StatusInternalServerError, "Register.html", echo.Map{})
+		return echoview.Render(context, http.StatusInternalServerError, "Register", echo.Map{
+			"title": "Register",
+		})
 	}
 
 	db.DB.Create(&model.User{Email: email, Password: passwordHash})
 
 	// TODO: auto-login after account creation
-	return context.Render(http.StatusOK, "Login.html", echo.Map{})
+	return echoview.Render(context, http.StatusCreated, "Login", echo.Map{
+		"title": "Login",
+	})
 }
