@@ -10,7 +10,7 @@ import (
 )
 
 func GetRegister(context echo.Context) error {
-	return echoview.Render(context, http.StatusOK, "Register", echo.Map{
+	return echoview.Render(context, http.StatusOK, "register", echo.Map{
 		"title": "Login",
 	})
 }
@@ -21,7 +21,7 @@ func PostRegister(context echo.Context) error {
 
 	passwordHash, err := util.HashPassword(password)
 	if err != nil {
-		return echoview.Render(context, http.StatusInternalServerError, "Register", echo.Map{
+		return echoview.Render(context, http.StatusInternalServerError, "register", echo.Map{
 			"title": "Register",
 		})
 	}
@@ -29,7 +29,7 @@ func PostRegister(context echo.Context) error {
 	db.DB.Create(&model.User{Email: email, Password: passwordHash})
 
 	// TODO: auto-login after account creation
-	return echoview.Render(context, http.StatusCreated, "Login", echo.Map{
+	return echoview.Render(context, http.StatusCreated, "login", echo.Map{
 		"title": "Login",
 	})
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func GetHomepage(context echo.Context) error {
-	return echoview.Render(context, http.StatusOK, "Homepage", echo.Map{
+	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
 		"title": "Overview",
 	})
 }
