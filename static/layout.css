@@ -1,0 +1,18 @@
+.footer {
+	text-align: center;
+}
+
+.footer-icon {
+	margin: 0 .2rem;
+	display: inline-block;
+	animation: heartbeat 2s ease-in-out alternate infinite;
+}
+
+@keyframes heartbeat {
+	from {
+		scale: 1;
+	}
+	to {
+		scale: 1.3;
+	}
+}
