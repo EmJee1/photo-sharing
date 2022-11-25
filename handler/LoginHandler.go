@@ -10,7 +10,9 @@ import (
 )
 
 func GetLogin(context echo.Context) error {
-	return echoview.Render(context, http.StatusOK, "Login", echo.Map{})
+	return echoview.Render(context, http.StatusOK, "Login", echo.Map{
+		"title": "Login",
+	})
 }
 
 func PostLogin(context echo.Context) error {
@@ -20,8 +22,13 @@ func PostLogin(context echo.Context) error {
 	user := &model.User{}
 	db.DB.Where("email = ?", email).First(&user)
 	if user == nil || !util.CheckPasswordHash(password, user.Password) {
-		return context.Render(http.StatusUnauthorized, "Login.html", echo.Map{"error": "Invalid username & password combination"})
+		return echoview.Render(context, http.StatusUnauthorized, "Login", echo.Map{
+			"error": "Invalid username & password combination",
+			"title": "Login",
+		})
 	}
 
-	return context.Render(http.StatusOK, "Login.html", echo.Map{})
+	return echoview.Render(context, http.StatusOK, "Login", echo.Map{
+		"title": "Login",
+	})
 }

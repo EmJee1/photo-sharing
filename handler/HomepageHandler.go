@@ -8,6 +8,6 @@ import (
 
 func GetHomepage(context echo.Context) error {
 	return echoview.Render(context, http.StatusOK, "Homepage", echo.Map{
-		"title": "Hello, World!",
+		"title": "Overview",
 	})
 }
