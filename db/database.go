@@ -3,6 +3,7 @@ package db
 import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 	"photo-sharing/model"
 )
 
@@ -22,5 +23,8 @@ func Open() error {
 }
 
 func AutoMigrate() {
-	DB.AutoMigrate(&model.User{})
+	err := DB.AutoMigrate(&model.User{})
+	if err != nil {
+		log.Fatal("Failed to execute auto-migrate on DB")
+	}
 }

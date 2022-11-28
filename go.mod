@@ -4,15 +4,15 @@ go 1.19
 
 require (
 	github.com/foolin/goview v0.3.0
+	github.com/golang-jwt/jwt/v4 v4.4.2
 	github.com/labstack/echo v3.3.10+incompatible
-	github.com/labstack/echo/v4 v4.4.0
+	github.com/labstack/echo/v4 v4.1.15
 	golang.org/x/crypto v0.3.0
 	gorm.io/driver/postgres v1.4.5
 	gorm.io/gorm v1.24.2
 )
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.13.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect

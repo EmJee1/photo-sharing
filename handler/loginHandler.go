@@ -28,8 +28,21 @@ func PostLogin(context echo.Context) error {
 		})
 	}
 
-	// TODO: supply user with token and redirect to homepage
-	return echoview.Render(context, http.StatusOK, "login", echo.Map{
-		"title": "Login",
+	expiresAt, token, err := util.GenerateJWT(email)
+	if err != nil {
+		return echoview.Render(context, http.StatusInternalServerError, "login", echo.Map{
+			"error": "Something unexpected went wrong",
+			"title": "Login",
+		})
+	}
+
+	context.SetCookie(&http.Cookie{
+		Name:    "token",
+		Value:   token,
+		Expires: expiresAt,
+	})
+
+	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
+		"title": "Homepage",
 	})
 }
