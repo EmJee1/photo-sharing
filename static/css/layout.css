@@ -16,3 +16,45 @@
 		scale: 1.3;
 	}
 }
+
+/* MENU  */
+.menu-toggle {
+	border: 2px solid lightgray;
+	background: transparent;
+	border-radius: 8px;
+}
+
+.menu-inner {
+	list-style: none;
+	padding-left: 0;
+	width: min-content;
+	border: 2px solid lightgray;
+	border-radius: 8px;
+	margin: .2rem 0 0;
+	display: none;
+}
+
+.menu-inner.toggled {
+	display: block;
+}
+
+.menu-item {
+	color: black;
+	padding: .4rem .6rem;
+	text-decoration: none;
+}
+
+.menu-item a {
+	color: inherit;
+}
+
+.menu-item p {
+	margin: 0;
+}
+
+.menu-divider {
+	height: 2px;
+	display: block;
+	background: lightgray;
+	margin: .2rem 0;
+}
