@@ -43,7 +43,6 @@ func PostLogin(context echo.Context) error {
 		Expires: expiresAt,
 	})
 
-	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
-		"title": "Homepage",
-	})
+	context.Redirect(http.StatusFound, "/")
+	return nil
 }
