@@ -38,9 +38,10 @@ func PostLogin(context echo.Context) error {
 	}
 
 	context.SetCookie(&http.Cookie{
-		Name:    "token",
-		Value:   token,
-		Expires: expiresAt,
+		Name:     "token",
+		Value:    token,
+		Expires:  expiresAt,
+		HttpOnly: true,
 	})
 
 	context.Redirect(http.StatusFound, "/")
