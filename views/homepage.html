@@ -1,6 +1,12 @@
 {{ define "content" }}
 
 <h1>Jouw groepen</h1>
-{{include "partials/menu"}}
+{{ include "partials/menu" }}
+
+<a href="/group/create">Groep aanmaken</a>
+
+{{ range .user.Groups }}
+<h5>Here: {{ .Name }}</h5>
+{{ end }}
 
 {{ end }}
