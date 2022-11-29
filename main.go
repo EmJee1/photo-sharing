@@ -35,6 +35,7 @@ func main() {
 	e.POST("/login", handler.PostLogin)
 	e.GET("/register", handler.GetRegister)
 	e.POST("/register", handler.PostRegister)
+	e.GET("/logout", handler.GetLogout)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
