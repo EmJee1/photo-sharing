@@ -7,6 +7,7 @@ import (
 	"photo-sharing/db"
 	"photo-sharing/model"
 	"photo-sharing/util"
+	"strconv"
 )
 
 func GetLogin(context echo.Context) error {
@@ -28,7 +29,7 @@ func PostLogin(context echo.Context) error {
 		})
 	}
 
-	expiresAt, token, err := util.GenerateJWT(email)
+	expiresAt, token, err := util.GenerateJWT(strconv.FormatUint(uint64(user.ID), 10))
 	if err != nil {
 		return echoview.Render(context, http.StatusInternalServerError, "login", echo.Map{
 			"error": "Something unexpected went wrong",

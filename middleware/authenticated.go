@@ -18,7 +18,7 @@ func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
 			})
 		}
 
-		_, err = util.ParseJWT(cookie.Value)
+		tokenContent, err := util.ParseJWT(cookie.Value)
 		if err != nil {
 			// TODO: Redirect to login instead of render login
 			return echoview.Render(context, http.StatusInternalServerError, "login", echo.Map{
@@ -26,6 +26,8 @@ func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
 				"title": "Login",
 			})
 		}
+
+		context.Set("userId", tokenContent)
 
 		return next(context)
 	}
