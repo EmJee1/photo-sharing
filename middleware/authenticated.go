@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/util"
+	"strconv"
 )
 
 func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
@@ -20,7 +21,13 @@ func IsAuthenticated(next echo.HandlerFunc) echo.HandlerFunc {
 			return nil
 		}
 
-		context.Set("userId", tokenContent)
+		userId, err := strconv.ParseUint(tokenContent, 10, 64)
+		if err != nil {
+			context.Redirect(http.StatusFound, "/login")
+			return nil
+		}
+
+		context.Set("userId", uint(userId))
 
 		return next(context)
 	}

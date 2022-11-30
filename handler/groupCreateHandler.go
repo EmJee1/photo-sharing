@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"photo-sharing/db"
 	"photo-sharing/model"
-	"strconv"
 )
 
 func GetGroupCreate(context echo.Context) error {
@@ -18,12 +17,11 @@ func GetGroupCreate(context echo.Context) error {
 func PostGroupCreate(context echo.Context) error {
 	name := context.FormValue("name")
 
-	userId := context.Get("userId").(string)
-	uintUserId, _ := strconv.ParseUint(userId, 10, 64)
+	userId := context.Get("userId").(uint)
 
 	group := model.Group{Name: name}
 	db.DB.Create(&group)
-	db.DB.Model(&group).Association("Users").Append([]*model.User{{ID: uint(uintUserId)}})
+	db.DB.Model(&group).Association("Users").Append([]*model.User{{ID: userId}})
 
 	context.Redirect(http.StatusSeeOther, "/")
 	return nil
