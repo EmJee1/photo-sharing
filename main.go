@@ -29,14 +29,13 @@ func main() {
 
 	db.AutoMigrate()
 
-	// TODO: add is-logged-in middleware
 	e.GET("/", handler.GetHomepage, middleware.IsAuthenticated)
 	e.GET("/login", handler.GetLogin)
 	e.POST("/login", handler.PostLogin)
 	e.GET("/register", handler.GetRegister)
 	e.POST("/register", handler.PostRegister)
 	e.GET("/logout", handler.GetLogout)
-	e.GET("/group/create", handler.GetGroupCreate)
+	e.GET("/group/create", handler.GetGroupCreate, middleware.IsAuthenticated)
 	e.POST("/group/create", handler.PostGroupCreate, middleware.IsAuthenticated)
 
 	e.Logger.Fatal(e.Start(":8080"))
