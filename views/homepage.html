@@ -4,7 +4,7 @@
 {{ include "partials/menu" }}
 
 <a href="/group/create">Groep aanmaken</a>
-<div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+<div class="uk-grid-match uk-grid-small uk-child-width-expand@s" uk-grid>
 	{{ range .user.Groups }}
 	<div>
 		<a class="uk-card uk-card-default uk-card-body" href="/group/{{ .ID }}">
