@@ -4,9 +4,20 @@
 {{ include "partials/menu" }}
 
 <a href="/group/create">Groep aanmaken</a>
-
-{{ range .user.Groups }}
-<h5>Here: {{ .Name }}</h5>
-{{ end }}
+<div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+	{{ range .user.Groups }}
+	<div>
+		<a class="uk-card uk-card-default uk-card-body" href="/group/{{ .ID }}">
+			<span class="uk-card-badge uk-label">9 foto's</span>
+			<h3 class="uk-card-title">{{ .Name }}</h3>
+			{{ if .Description }}
+			<p>
+				{{ .Description }}
+			</p>
+			{{ end }}
+		</a>
+	</div>
+	{{ end }}
+</div>
 
 {{ end }}
