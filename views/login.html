@@ -2,10 +2,14 @@
 <h1>Login</h1>
 <p>{{ .error }}</p>
 <form action="/login" method="post">
-	<label for="email">Email</label>
-	<input type="email" name="email" id="email">
-	<label for="password">Password</label>
-	<input type="password" name="password" id="password">
-	<button type="submit">Submit</button>
+	<div class="uk-margin">
+		<label class="uk-form-label" for="email">Email</label>
+		<input class="uk-input" type="email" name="email" id="email">
+	</div>
+	<div class="uk-margin">
+		<label class="uk-form-label" for="password">Password</label>
+		<input class="uk-input" type="password" name="password" id="password">
+	</div>
+	<button class="uk-button uk-button-primary" type="submit">Inloggen</button>
 </form>
 {{end}}

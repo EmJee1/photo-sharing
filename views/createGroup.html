@@ -4,9 +4,11 @@
 {{ include "partials/menu" }}
 
 <form action="/group/create" method="post">
-	<label for="name">Naam</label>
-	<input type="text" name="name" id="name">
-	<button type="submit">Aanmaken</button>
+	<div class="uk-margin">
+		<label class="uk-form-label" for="name">Naam</label>
+		<input class="uk-input" name="name" id="name">
+	</div>
+	<button class="uk-button uk-button-primary" type="submit">Aanmaken</button>
 </form>
 
 {{ end }}
