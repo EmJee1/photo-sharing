@@ -7,9 +7,9 @@
 <div class="uk-grid-match uk-grid-small uk-child-width-expand@s" uk-grid>
 	{{ range .user.Groups }}
 	<div>
-		<a class="uk-card uk-card-default uk-card-body" href="/group/{{ .ID }}">
+		<a class="uk-card uk-card-default uk-card-body uk-link-toggle" href="/group/{{ .ID }}">
 			<span class="uk-card-badge uk-label">9 foto's</span>
-			<h3 class="uk-card-title">{{ .Name }}</h3>
+			<h3 class="uk-card-title uk-link-heading">{{ .Name }}</h3>
 			{{ if .Description }}
 			<p>
 				{{ .Description }}
