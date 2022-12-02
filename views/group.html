@@ -1,0 +1,21 @@
+{{ define "content" }}
+
+<h1>{{ .group.Name }}</h1>
+<div>
+	<ul class="uk-tab" data-uk-tab="{connect:'#group-tabs'}">
+		<li class="uk-active"><a>Foto's</a></li>
+		<li><a>Vrienden</a></li>
+	</ul>
+	<ul id="group-tabs" class="uk-switcher uk-margin">
+		<li>
+			Images
+		</li>
+		<li>
+			{{ range .group.Users }}
+			<p>{{ .Email }}</p>
+			{{ end }}
+		</li>
+	</ul>
+</div>
+
+{{ end }}

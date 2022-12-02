@@ -35,6 +35,7 @@ func main() {
 	e.GET("/register", handler.GetRegister)
 	e.POST("/register", handler.PostRegister)
 	e.GET("/logout", handler.GetLogout)
+	e.GET("/group/:id", handler.GetGroup, middleware.IsAuthenticated)
 	e.GET("/group/create", handler.GetGroupCreate, middleware.IsAuthenticated)
 	e.POST("/group/create", handler.PostGroupCreate, middleware.IsAuthenticated)
 
