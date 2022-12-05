@@ -12,7 +12,7 @@ func GetGroup(context echo.Context) error {
 	groupId := context.Param("id")
 
 	group := &model.Group{}
-	db.DB.Model(&model.Group{}).Where("id = ?", groupId).Preload("Users").First(&group)
+	db.DB.Model(&model.Group{}).Where("id = ?", groupId).Preload("Users").Preload("GroupInvites").First(&group)
 	if group == nil {
 		// TODO: 404 page
 		context.Redirect(http.StatusSeeOther, "/")
