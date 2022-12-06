@@ -1,20 +1,19 @@
 package handler
 
 import (
-	"fmt"
-	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
+	"photo-sharing/dto"
 	"photo-sharing/model"
 	"strconv"
 )
 
 func PostGroupSendInvite(context echo.Context) error {
-	// TODO: can only update if logged-in-user is member of group
+	// TODO: can only invite if logged-in-user is member of group
 
 	groupId, err := strconv.ParseUint(context.Param("id"), 10, 64)
-	inviteeEmail := context.FormValue("email")
+	inviteeEmail := context.FormValue("inviteeEmail")
 	inviterId := context.Get("userId").(uint)
 
 	group := &model.Group{}
@@ -26,7 +25,10 @@ func PostGroupSendInvite(context echo.Context) error {
 		Error
 
 	if err != nil {
-		// TODO: 404 page: group not found
+		return context.JSON(http.StatusConflict, dto.ErrorResponse{
+			Error: "That group does not exist",
+			Ok:    false,
+		})
 	}
 
 	var exists bool
@@ -37,14 +39,16 @@ func PostGroupSendInvite(context echo.Context) error {
 		Find(&exists)
 
 	if exists {
-		// TODO: error message: invite already sent by ...
-		return echoview.Render(context, http.StatusConflict, "group", echo.Map{
-			"title": group.Name,
+		return context.JSON(http.StatusConflict, dto.ErrorResponse{
+			Error: "That user is already invited for this group",
+			Ok:    false,
 		})
 	}
 
 	groupInvite := model.GroupInvite{InviteeEmail: inviteeEmail, InvitedBy: inviterId, GroupID: uint(groupId)}
 	db.DB.Create(&groupInvite)
 
-	return context.Redirect(http.StatusSeeOther, fmt.Sprintf("/group/%d", groupId))
+	return context.JSON(http.StatusCreated, dto.SuccessResponse{
+		Ok: true,
+	})
 }
