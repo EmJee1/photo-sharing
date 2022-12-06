@@ -10,14 +10,14 @@ import (
 )
 
 func PostGroupSendInvite(context echo.Context) error {
-	// TODO: can only invite if logged-in-user is member of group
+	// TODO: only invite if logged-in-user is member of group
 
-	groupId, err := strconv.ParseUint(context.Param("id"), 10, 64)
+	groupId, _ := strconv.ParseUint(context.Param("id"), 10, 64)
 	inviteeEmail := context.FormValue("inviteeEmail")
 	inviterId := context.Get("userId").(uint)
 
 	group := &model.Group{}
-	err = db.DB.
+	err := db.DB.
 		Model(&model.Group{}).
 		Where("id = ?", groupId).
 		Preload("Users").
