@@ -1,18 +1,27 @@
 package db
 
 import (
+	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
+	"os"
 	"photo-sharing/model"
 )
 
 var DB *gorm.DB
 
+func getDsn() string {
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	name := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
+	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, name, port)
+}
+
 func Open() error {
-	// TODO: extract database credentials in .env file
-	dsn := "host=localhost user=postgres password=password dbname=postgres port=5432 sslmode=disable"
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(getDsn()), &gorm.Config{})
 	if err != nil {
 		return err
 	}

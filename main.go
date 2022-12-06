@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/echoview-v4"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"photo-sharing/db"
 	"photo-sharing/handler"
@@ -11,6 +12,11 @@ import (
 
 func main() {
 	e := echo.New()
+
+	err := godotenv.Load()
+	if err != nil {
+		e.Logger.Fatal("Error loading .env file")
+	}
 
 	mw := echoview.NewMiddleware(goview.Config{
 		Root:         "views",

@@ -3,6 +3,7 @@ package util
 import (
 	"errors"
 	"github.com/golang-jwt/jwt/v4"
+	"os"
 	"time"
 )
 
@@ -11,8 +12,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-// TODO: extract into .env file
-var jwtKey = []byte("secret-key")
+var jwtKey = []byte(os.Getenv("JWT_SECRET"))
 
 func GenerateJWT(email string) (time.Time, string, error) {
 	expiresAt := time.Now().Add(time.Hour)
