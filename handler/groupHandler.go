@@ -12,11 +12,18 @@ func GetGroup(context echo.Context) error {
 	groupId := context.Param("id")
 
 	group := &model.Group{}
-	db.DB.Model(&model.Group{}).Where("id = ?", groupId).Preload("Users").Preload("GroupInvites").First(&group)
-	if group == nil {
-		// TODO: 404 page
-		context.Redirect(http.StatusSeeOther, "/")
-		return nil
+	err := db.DB.
+		Model(&model.Group{}).
+		Where("id = ?", groupId).
+		Preload("Users").
+		Preload("GroupInvites").
+		First(&group).
+		Error
+
+	if err != nil {
+		return echoview.Render(context, http.StatusNotFound, "404", echo.Map{
+			"title": "Not Found",
+		})
 	}
 
 	return echoview.Render(context, http.StatusOK, "group", echo.Map{
