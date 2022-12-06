@@ -36,7 +36,7 @@ func ParseJWT(tokenString string) (string, error) {
 		return jwtKey, nil
 	})
 	if pErr != nil || !token.Valid {
-		err = errors.New("Invalid JWT token")
+		err = errors.New("invalid JWT token")
 	}
 
 	return claims.Email, err
