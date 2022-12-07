@@ -5,9 +5,10 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+	"path"
 )
 
-const fileUploadDir = "/uploads"
+const fileUploadDir = "uploads"
 
 func UploadImage(file *multipart.FileHeader) error {
 	src, err := file.Open()
@@ -16,7 +17,8 @@ func UploadImage(file *multipart.FileHeader) error {
 	}
 	defer src.Close()
 
-	dst, err := os.Create(uuid.New().String())
+	filePath := path.Join(fileUploadDir, uuid.New().String()+file.Filename)
+	dst, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}

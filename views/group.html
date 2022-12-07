@@ -43,7 +43,8 @@
 	<div id="create-post" uk-modal>
 		<div class="uk-modal-dialog uk-modal-body">
 			<h2 class="uk-modal-title">Post maken</h2>
-			<form action="/group/{{ .group.ID }}/post">
+			<form action="/post" method="post" enctype='multipart/form-data'>
+				<input type="hidden" value="{{ .group.ID }}">
 				<div class="uk-margin">
 					<label class="uk-form-label" for="caption">Bijschrift</label>
 					<input class="uk-input" type="caption" name="caption" id="caption">
@@ -53,16 +54,16 @@
 						<span uk-icon="icon: cloud-upload"></span>
 						<span class="uk-text-middle">Upload een foto door hem hier te slepen of</span>
 						<div uk-form-custom>
-							<input type="file">
+							<input type="file" name="image">
 							<span class="uk-link">selecteer er een</span>
 						</div>
 					</div>
 				</div>
+				<div class="uk-text-right">
+					<button class="uk-button uk-button-default uk-modal-close">Cancel</button>
+					<button class="uk-button uk-button-primary" type="submit">Save</button>
+				</div>
 			</form>
-			<p class="uk-text-right">
-				<button class="uk-button uk-button-default uk-modal-close">Cancel</button>
-				<button class="uk-button uk-button-primary">Save</button>
-			</p>
 		</div>
 	</div>
 
