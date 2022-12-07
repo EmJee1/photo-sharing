@@ -44,7 +44,7 @@
 		<div class="uk-modal-dialog uk-modal-body">
 			<h2 class="uk-modal-title">Post maken</h2>
 			<form action="/post" method="post" enctype='multipart/form-data'>
-				<input type="hidden" value="{{ .group.ID }}">
+				<input name="group" type="hidden" value="{{ .group.ID }}">
 				<div class="uk-margin">
 					<label class="uk-form-label" for="caption">Bijschrift</label>
 					<input class="uk-input" type="caption" name="caption" id="caption">

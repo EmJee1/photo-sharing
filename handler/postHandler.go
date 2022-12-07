@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
@@ -11,22 +12,28 @@ import (
 
 func PostPost(context echo.Context) error {
 	// TODO: check user is member of group
+	// TODO: only accept image formats
 
 	userId := context.Get("userId").(uint)
-	caption := context.Param("caption")
-	groupId, _ := strconv.ParseUint(context.Param("groupId"), 10, 64)
+	caption := context.FormValue("caption")
+	groupId, _ := strconv.ParseUint(context.FormValue("group"), 10, 64)
 
 	file, err := context.FormFile("image")
 	if err != nil {
 		return err
 	}
 
-	if err := util.UploadImage(file); err != nil {
+	filepath, err := util.UploadImage(file)
+	if err != nil {
 		return err
 	}
 
-	post := model.Post{Caption: caption, UserID: userId, Filepath: "/file", GroupID: uint(groupId)}
-	db.DB.Create(&post)
+	db.DB.Create(&model.Post{
+		Caption:  caption,
+		UserID:   userId,
+		Filepath: filepath,
+		GroupID:  uint(groupId),
+	})
 
-	return context.Redirect(http.StatusSeeOther, "/")
+	return context.Redirect(http.StatusSeeOther, fmt.Sprintf("/group/%d", groupId))
 }
