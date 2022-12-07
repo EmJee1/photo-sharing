@@ -12,7 +12,6 @@ import (
 
 func PostPost(context echo.Context) error {
 	// TODO: check user is member of group
-	// TODO: only accept image formats
 
 	userId := context.Get("userId").(uint)
 	caption := context.FormValue("caption")
