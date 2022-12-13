@@ -28,6 +28,7 @@ func main() {
 	e.Use(mw)
 	e.Static("/css", "static/css")
 	e.Static("/js", "static/js")
+	e.Static("/uploads", "uploads")
 
 	if err := db.Open(); err != nil {
 		e.Logger.Fatal("Could not connect to database")

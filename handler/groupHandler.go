@@ -17,6 +17,7 @@ func GetGroup(context echo.Context) error {
 		Where("id = ?", groupId).
 		Preload("Users").
 		Preload("GroupInvites").
+		Preload("Posts").
 		First(&group).
 		Error
 

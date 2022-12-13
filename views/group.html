@@ -9,7 +9,21 @@
 		<ul id="group-tabs" class="uk-switcher uk-margin">
 			<li>
 				<a href="#create-post" uk-toggle>Post maken</a>
-				Images
+				<div class="uk-child-width-1-2@m" uk-grid>
+            {{ range .group.Posts }}
+							<div>
+								<div class="uk-card uk-card-default">
+									<div class="uk-card-media-top">
+										<img src="/{{ .Filepath }}" width="1800" height="1200" alt="">
+									</div>
+									<div class="uk-card-body">
+										<h3 class="uk-card-title">Media Top</h3>
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+									</div>
+								</div>
+							</div>
+            {{ end }}
+				</div>
 			</li>
 			<li>
 				<div class="uk-column-1-2@s">
