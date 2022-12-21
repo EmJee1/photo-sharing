@@ -1,10 +1,35 @@
-{{define "content"}}
-	<h1>Registreren</h1>
-	<form action="/register" method="post">
-		<label for="email">Email</label>
-		<input type="email" name="email" id="email">
-		<label for="password">Password</label>
-		<input type="password" name="password" id="password">
-		<button type="submit">Submit</button>
-	</form>
-{{end}}
+{{ define "content" }}
+
+	<div class="uk-section uk-flex uk-flex-middle uk-animation-fade" uk-height-viewport>
+		<div class="uk-width-1-1">
+			<div class="uk-grid-margin uk-grid uk-grid-stack" uk-grid>
+				<div class="uk-width-1-1@m">
+					<div class="uk-margin uk-width-large uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large">
+						<h3 class="uk-card-title uk-text-center">Registreren</h3>
+						<form action="/register" method="post">
+							<div class="uk-margin">
+								<div class="uk-inline uk-width-1-1">
+									<label class="uk-form-label" for="email">Email</label>
+									<input class="uk-input" type="email" name="email" id="email">
+								</div>
+							</div>
+							<div class="uk-margin">
+								<div class="uk-inline uk-width-1-1">
+									<label class="uk-form-label" for="password">Wachtwoord</label>
+									<input class="uk-input" type="password" name="password" id="password">
+								</div>
+							</div>
+							<div class="uk-margin">
+								<button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Account aanmaken</button>
+							</div>
+							<div class="uk-text-small uk-text-center">
+								Al een account? <a href="/login">Log hier in</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{{ end }}
