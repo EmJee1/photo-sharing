@@ -7,6 +7,7 @@ type Post struct {
 	Filepath  string
 	Caption   string
 	UserID    uint
+	User      User
 	GroupID   uint
 	CreatedAt time.Time
 }
