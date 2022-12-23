@@ -45,7 +45,6 @@ func main() {
 	e.POST("/post", handler.PostPost, middleware.IsAuthenticated)
 	e.GET("/group/:id", handler.GetGroup, middleware.IsAuthenticated)
 	e.POST("/group/:id/invite", handler.PostGroupSendInvite, middleware.IsAuthenticated)
-	e.GET("/group/create", handler.GetGroupCreate, middleware.IsAuthenticated)
 	e.POST("/group/create", handler.PostGroupCreate, middleware.IsAuthenticated)
 
 	e.Logger.Fatal(e.Start(":8080"))

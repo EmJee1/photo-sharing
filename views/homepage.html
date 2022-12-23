@@ -2,7 +2,7 @@
 
 	<div class="uk-flex uk-flex-between uk-margin-medium-bottom">
 		<h1 class="uk-text-large uk-margin-remove">Jouw groepen</h1>
-		<a href="/group/create" class="uk-button uk-button-secondary uk-flex uk-flex-middle">
+		<a href="#create-group" class="uk-button uk-button-secondary uk-flex uk-flex-middle" uk-toggle>
 			<span class="uk-margin-small-right" uk-icon="plus"></span>
 			Groep maken
 		</a>
@@ -26,6 +26,26 @@
 					</a>
 				</div>
       {{ end }}
+	</div>
+
+	<div id="create-group" uk-modal>
+		<div class="uk-modal-dialog uk-modal-body">
+			<h2 class="uk-modal-title">Groep maken</h2>
+			<form action="/group/create" method="post">
+				<div class="uk-margin">
+					<label class="uk-form-label" for="name">Naam</label>
+					<input class="uk-input" type="name" name="name" id="name">
+				</div>
+				<div class="uk-margin">
+					<label class="uk-form-label" for="description">Groepsbeschrijving</label>
+					<textarea class="uk-textarea" type="description" name="description" id="description"></textarea>
+				</div>
+				<div class="uk-text-right">
+					<button class="uk-button uk-button-default uk-modal-close">Annuleren</button>
+					<button class="uk-button uk-button-primary" type="submit">Opslaan</button>
+				</div>
+			</form>
+		</div>
 	</div>
 
 {{ end }}
