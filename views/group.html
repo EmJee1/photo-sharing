@@ -27,6 +27,9 @@
 													<time datetime="{{ .CreatedAt }}">{{ .CreatedAt.Format "02 Jan, 2006" }}</time>
 												</p>
 											</div>
+											<div class="uk-width-auto">
+
+											</div>
 										</div>
 									</div>
 
@@ -35,7 +38,8 @@
 									</div>
 
 									<div class="uk-card-body uk-padding-small">
-										<p>{{ .Caption }}</p>
+										<p class="text-overflow-dots">{{ .Caption }}</p>
+										<button class="uk-button uk-button-link">Comments & meer</button>
 									</div>
 
 								</div>
