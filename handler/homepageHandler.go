@@ -10,7 +10,11 @@ import (
 
 func GetHomepage(context echo.Context) error {
 	user := &model.User{}
-	db.DB.Model(&model.User{}).Where("id = ?", context.Get("userId")).Preload("Groups").Find(&user)
+	db.DB.
+		Model(&model.User{}).
+		Where("id = ?", context.Get("userId")).
+		Preload("Groups.Posts").
+		Find(&user)
 
 	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
 		"title": "Overview",
