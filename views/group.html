@@ -8,8 +8,12 @@
 		</ul>
 		<ul id="group-tabs" class="uk-switcher uk-margin">
 			<li>
-				<a href="#create-post" uk-toggle>Post maken</a>
-				<div class="uk-child-width-1-2@s uk-child-width-1-3@m" uk-grid>
+				<a href="#create-post" class="uk-button uk-button-secondary uk-margin-small-bottom" uk-toggle>
+					<span class="uk-margin-small-right" uk-icon="plus"></span>
+					Post maken
+				</a>
+				<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
+						 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
             {{ range .group.Posts }}
 							<div>
 								<div class="uk-card uk-card-default">
