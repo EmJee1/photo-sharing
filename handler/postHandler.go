@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"errors"
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -11,11 +12,20 @@ import (
 )
 
 func PostPost(context echo.Context) error {
-	// TODO: check user is member of group
-
 	userId := context.Get("userId").(uint)
 	caption := context.FormValue("caption")
 	groupId, _ := strconv.ParseUint(context.FormValue("group"), 10, 64)
+
+	var isMemberOfGroup bool
+	db.DB.
+		Select("count(*) > 0").
+		Table("group_users").
+		Where("group_id = ? AND user_id = ?", groupId, userId).
+		Find(&isMemberOfGroup)
+
+	if !isMemberOfGroup {
+		return errors.New("user is not a member of that group")
+	}
 
 	file, err := context.FormFile("image")
 	if err != nil {
