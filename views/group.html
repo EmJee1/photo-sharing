@@ -13,10 +13,6 @@
             {{ range .group.Posts }}
 							<div>
 								<div class="uk-card uk-card-default">
-									<div class="uk-card-media-top">
-										<img src="/{{ .Filepath }}" width="1800" height="1200" alt="">
-									</div>
-
 									<div class="uk-card-header">
 										<div class="uk-grid-small uk-flex-middle" uk-grid>
 											<div class="uk-width-auto">
@@ -24,8 +20,8 @@
 														 src="https://avatars.dicebear.com/api/personas/{{ .UserID }}.svg" alt="Avatar">
 											</div>
 											<div class="uk-width-expand">
-												<h3 class="uk-card-title uk-margin-remove-bottom">
-                            {{ .Caption }}
+												<h3 class="uk-card-title uk-text-default uk-margin-remove-bottom text-overflow-dots">
+                            {{ .User.Username }}
 												</h3>
 												<p class="uk-text-meta uk-margin-remove-top">
 													<time datetime="{{ .CreatedAt }}">{{ .CreatedAt.Format "02 Jan, 2006" }}</time>
@@ -33,6 +29,15 @@
 											</div>
 										</div>
 									</div>
+
+									<div>
+										<img src="/{{ .Filepath }}" width="1800" height="1200" alt="">
+									</div>
+
+									<div class="uk-card-body uk-padding-small">
+										<p>{{ .Caption }}</p>
+									</div>
+
 								</div>
 							</div>
             {{ end }}
@@ -70,20 +75,23 @@
 	<div id="create-post" uk-modal>
 		<div class="uk-modal-dialog uk-modal-body">
 			<h2 class="uk-modal-title">Post maken</h2>
-			<form action="/post" method="post" enctype='multipart/form-data'>
+			<form id="post-image-form" action="/post" method="post" enctype='multipart/form-data'>
 				<input name="group" type="hidden" value="{{ .group.ID }}">
 				<div class="uk-margin">
 					<label class="uk-form-label" for="caption">Bijschrift</label>
 					<input class="uk-input" type="caption" name="caption" id="caption">
 				</div>
 				<div class="uk-margin">
-					<div class="js-upload uk-placeholder uk-text-center">
+					<div id="post-image-container" class="js-upload uk-placeholder uk-text-center">
 						<span uk-icon="icon: cloud-upload"></span>
 						<span class="uk-text-middle">Upload een foto door hem hier te slepen of</span>
 						<div uk-form-custom>
-							<input type="file" name="image">
+							<input type="file" name="image" id="post-image-input">
 							<span class="uk-link">selecteer er een</span>
 						</div>
+					</div>
+					<div id="post-image-preview" style="display: none">
+						<img class="uk-inline uk-display-block" src="" alt="post image preview">
 					</div>
 				</div>
 				<div class="uk-text-right">
