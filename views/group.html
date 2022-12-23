@@ -1,6 +1,13 @@
 {{ define "content" }}
 
-	<h1 class="uk-text-large uk-margin-remove-top">{{ .group.Name }}</h1>
+	<div class="uk-flex uk-flex-between">
+		<h1 class="uk-text-large uk-margin-remove-top">{{ .group.Name }}</h1>
+		<a href="#create-post" class="uk-button uk-button-secondary uk-margin-small-bottom uk-flex uk-flex-middle"
+			 uk-toggle>
+			<span class="uk-margin-small-right" uk-icon="plus"></span>
+			Post maken
+		</a>
+	</div>
 	<div>
 		<ul class="uk-tab" data-uk-tab="{connect:'#group-tabs'}">
 			<li class="uk-active"><a>Foto's</a></li>
@@ -8,10 +15,6 @@
 		</ul>
 		<ul id="group-tabs" class="uk-switcher uk-margin">
 			<li>
-				<a href="#create-post" class="uk-button uk-button-secondary uk-margin-small-bottom" uk-toggle>
-					<span class="uk-margin-small-right" uk-icon="plus"></span>
-					Post maken
-				</a>
 				<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
 						 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
             {{ range .group.Posts }}
@@ -21,7 +24,7 @@
 										<div class="uk-grid-small uk-flex-middle" uk-grid>
 											<div class="uk-width-auto">
 												<img class="uk-border-circle" width="40" height="40"
-														 src="https://avatars.dicebear.com/api/personas/{{ .UserID }}.svg" alt="Avatar">
+														 src="https://avatars.dicebear.com/api/initials/{{ .User.Username }}.svg" alt="Avatar">
 											</div>
 											<div class="uk-width-expand">
 												<h3 class="uk-card-title uk-text-default uk-margin-remove-bottom text-overflow-dots">
