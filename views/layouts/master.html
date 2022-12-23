@@ -7,6 +7,9 @@
 </head>
 <body>
 <div class="uk-container">
+    {{ if not .hideNavbar }}
+    {{ include "partials/navbar" }}
+    {{ end }}
     {{ template "content" . }}
 </div>
 {{ include "partials/footer" }}

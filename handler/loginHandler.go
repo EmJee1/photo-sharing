@@ -12,7 +12,8 @@ import (
 
 func GetLogin(context echo.Context) error {
 	return echoview.Render(context, http.StatusOK, "login", echo.Map{
-		"title": "Login",
+		"title":      "Login",
+		"hideNavbar": true,
 	})
 }
 
@@ -24,16 +25,18 @@ func PostLogin(context echo.Context) error {
 	db.DB.Where("email = ?", email).First(&user)
 	if user == nil || !util.CheckPasswordHash(password, user.Password) {
 		return echoview.Render(context, http.StatusUnauthorized, "login", echo.Map{
-			"error": "Invalid username & password combination",
-			"title": "Login",
+			"error":      "Invalid username & password combination",
+			"title":      "Login",
+			"hideNavbar": true,
 		})
 	}
 
 	expiresAt, token, err := util.GenerateJWT(strconv.FormatUint(uint64(user.ID), 10))
 	if err != nil {
 		return echoview.Render(context, http.StatusInternalServerError, "login", echo.Map{
-			"error": "Something unexpected went wrong",
-			"title": "Login",
+			"error":      "Something unexpected went wrong",
+			"title":      "Login",
+			"hideNavbar": true,
 		})
 	}
 
