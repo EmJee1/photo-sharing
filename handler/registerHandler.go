@@ -19,6 +19,7 @@ func GetRegister(context echo.Context) error {
 func PostRegister(context echo.Context) error {
 	email := context.FormValue("email")
 	password := context.FormValue("password")
+	username := context.FormValue("username")
 
 	passwordHash, err := util.HashPassword(password)
 	if err != nil {
@@ -28,7 +29,7 @@ func PostRegister(context echo.Context) error {
 		})
 	}
 
-	db.DB.Create(&model.User{Email: email, Password: passwordHash})
+	db.DB.Create(&model.User{Email: email, Password: passwordHash, Username: username})
 
 	// TODO: auto-login after account creation
 	return echoview.Render(context, http.StatusCreated, "login", echo.Map{
