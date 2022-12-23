@@ -1,3 +1,9 @@
+.text-overflow-dots {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+
 .footer-icon {
 	margin: 0 .2rem;
 	display: inline-block;
