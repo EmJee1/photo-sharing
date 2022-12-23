@@ -1,20 +1,28 @@
 {{ define "content" }}
 
-	<h1 class="uk-text-large uk-margin-remove-top">Jouw groepen</h1>
+	<div class="uk-flex uk-flex-between uk-margin-medium-bottom">
+		<h1 class="uk-text-large uk-margin-remove">Jouw groepen</h1>
+		<a href="/group/create" class="uk-button uk-button-secondary uk-flex uk-flex-middle">
+			<span class="uk-margin-small-right" uk-icon="plus"></span>
+			Groep maken
+		</a>
+	</div>
 
-	<a href="/group/create">Groep aanmaken</a>
-	<div class="uk-column-1-2@m">
+	<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
+			 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
       {{ range .user.Groups }}
-				<div>
-					<a class="uk-card uk-card-default uk-card-body uk-link-toggle uk-margin-medium-bottom"
+				<div class="group-card">
+					<a class="uk-card uk-card-default uk-card-body uk-link-toggle"
 						 href="/group/{{ .ID }}">
 						<span class="uk-card-badge uk-label">{{ len .Posts }} foto's</span>
 						<h3 class="uk-card-title uk-link-heading">{{ .Name }}</h3>
-              {{ if .Description }}
-								<p>
+						<p class="text-overflow-dots">
+                {{ if .Description }}
                     {{ .Description }}
-								</p>
-              {{ end }}
+                {{ else }}
+									Geen beschrijving
+                {{ end }}
+						</p>
 					</a>
 				</div>
       {{ end }}
