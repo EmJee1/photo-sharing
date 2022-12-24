@@ -116,5 +116,5 @@ UIkit.util.on('[data-url-tab]', 'show', (e) => {
 	const tabIndex = e.target.getAttribute('data-tab-index')
 	const url = new URL(window.location)
 	url.searchParams.set('tab', tabIndex)
-	history.pushState({}, '', url)
+	history.replaceState({}, '', url)
 })
