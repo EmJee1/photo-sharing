@@ -100,3 +100,21 @@ const attachCreatePostListeners = () => {
 	})
 }
 attachCreatePostListeners()
+
+const setTabOnPageLoad = () => {
+	const tabInUrl = new URL(window.location).searchParams.get('tab')
+	const tabElement = document.querySelector('[data-uk-tab]')
+	if (!tabElement) {
+		return console.debug('Not setting tab because no tab element present in DOM')
+	}
+
+	UIkit.tab(tabElement).show(tabInUrl ?? 0)
+}
+setTabOnPageLoad()
+
+UIkit.util.on('[data-url-tab]', 'show', (e) => {
+	const tabIndex = e.target.getAttribute('data-tab-index')
+	const url = new URL(window.location)
+	url.searchParams.set('tab', tabIndex)
+	history.pushState({}, '', url)
+})
