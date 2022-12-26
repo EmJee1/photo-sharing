@@ -7,6 +7,7 @@ import (
 	"photo-sharing/model"
 )
 
+// PostGroupCreate TODO: move to groupHandler file & change route
 func PostGroupCreate(context echo.Context) error {
 	name := context.FormValue("name")
 	description := context.FormValue("description")
