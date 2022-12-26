@@ -4,8 +4,8 @@ import (
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/model"
+	"photo-sharing/repository"
 	"photo-sharing/util"
 	"strconv"
 )
@@ -22,8 +22,8 @@ func PostLogin(context echo.Context) error {
 	password := context.FormValue("password")
 
 	user := &model.User{}
-	db.DB.Where("email = ?", email).First(&user)
-	if user == nil || !util.CheckPasswordHash(password, user.Password) {
+	err := repository.GetUserByEmail(email, &user)
+	if err != nil || !util.CheckPasswordHash(password, user.Password) {
 		return echoview.Render(context, http.StatusUnauthorized, "login", echo.Map{
 			"error":      "Invalid username & password combination",
 			"title":      "Login",
