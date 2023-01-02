@@ -112,3 +112,37 @@ const attachInviteFormListeners = () => {
 	})
 }
 attachInviteFormListeners()
+
+const setCacheInvites = (invites) => {
+	sessionStorage.setItem('invites:cache-date', Date.now().toString())
+	sessionStorage.setItem('invites', JSON.stringify(invites))
+}
+const getCacheInvites = () => {
+	const cacheDate = sessionStorage.getItem('invites:cache-date')
+	const invites = sessionStorage.getItem('invites')
+
+	// invalidate cache if the previous fetch is > 30 seconds ago
+	console.log('Time:', (Date.now() - cacheDate))
+	if (cacheDate && (Date.now() - cacheDate) > 30_000) {
+		return
+	}
+
+	if (invites) {
+		return JSON.parse(invites)
+	}
+}
+
+const fetchInvites = async () => {
+	const resp = await fetch('/invite')
+	const body = await resp.json()
+	return body.invites
+}
+
+const getInvites = async () => {
+	let invites = getCacheInvites()
+	if (!invites) {
+		invites = await fetchInvites()
+		setCacheInvites(invites)
+	}
+}
+void getInvites()

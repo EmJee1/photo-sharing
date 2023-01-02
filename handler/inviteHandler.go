@@ -59,3 +59,14 @@ func PostInvite(context echo.Context) error {
 		Ok: true,
 	})
 }
+
+func GetInvites(context echo.Context) error {
+	userId := context.Get("userId").(uint)
+	var invites []model.GroupInvite
+	repository.GetInvites(userId, &invites, "Group")
+
+	return context.JSON(http.StatusOK, dto.GetInvitesSuccessResponse{
+		SuccessResponse: dto.SuccessResponse{Ok: true},
+		Invites:         invites,
+	})
+}
