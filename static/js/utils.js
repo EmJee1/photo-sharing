@@ -122,7 +122,6 @@ const getCacheInvites = () => {
 	const invites = sessionStorage.getItem('invites')
 
 	// invalidate cache if the previous fetch is > 30 seconds ago
-	console.log('Time:', (Date.now() - cacheDate))
 	if (cacheDate && (Date.now() - cacheDate) > 30_000) {
 		return
 	}
