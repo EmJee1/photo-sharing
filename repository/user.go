@@ -24,3 +24,12 @@ func GetUserByEmail(email string, dest interface{}) error {
 		First(dest).
 		Error
 }
+
+func UserIsGroupMember(userId uint, groupId uint, dest interface{}) error {
+	return db.DB.
+		Select("count(*) > 0").
+		Table("group_users").
+		Where("user_id = ? AND group_id = ?", userId, groupId).
+		Find(dest).
+		Error
+}

@@ -4,22 +4,19 @@ import (
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
+	"photo-sharing/repository"
+	"strconv"
 )
 
 func IsGroupUser(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(context echo.Context) error {
 		userId := context.Get("userId").(uint)
-		groupId := context.Param("id")
+		groupId, parseErr := strconv.ParseUint(context.Param("id"), 10, 64)
 
 		var isGroupUser bool
-		db.DB.
-			Select("count(*) > 0").
-			Table("group_users").
-			Where("user_id = ? AND group_id = ?", userId, groupId).
-			Find(&isGroupUser)
+		repository.UserIsGroupMember(userId, uint(groupId), &isGroupUser)
 
-		if !isGroupUser {
+		if !isGroupUser || parseErr != nil {
 			return echoview.Render(context, http.StatusNotFound, "404", echo.Map{
 				"title": "Not Found",
 			})
