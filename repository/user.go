@@ -5,12 +5,16 @@ import (
 	"photo-sharing/model"
 )
 
-func GetUser(userId string, dest interface{}, preloads ...string) error {
-	return db.DB.
+func GetUser(userId uint, dest interface{}, preloads ...string) error {
+	query := db.DB.
 		Model(&model.User{}).
-		Where("id = ?", userId).
-		Find(dest).
-		Error
+		Where("id = ?", userId)
+
+	for _, p := range preloads {
+		query = query.Preload(p)
+	}
+
+	return query.Find(dest).Error
 }
 
 func GetUserByEmail(email string, dest interface{}) error {
