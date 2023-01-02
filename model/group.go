@@ -5,6 +5,6 @@ type Group struct {
 	Name         string
 	Description  string
 	Posts        []Post
-	Users        []*User `gorm:"many2many:group_users;"`
+	Users        []User `gorm:"many2many:group_users;"`
 	GroupInvites []GroupInvite
 }

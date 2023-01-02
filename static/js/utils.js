@@ -1,34 +1,7 @@
-const inviteUserToGroup = async (groupId, inviteeEmail) => {
-	const formData = new FormData()
-	formData.append('inviteeEmail', inviteeEmail)
-
-	await fetch(`/group/${groupId}/invite`, {
-		method: 'POST',
-		body: formData,
-	})
+const handleApiError = (resBody) => {
+	const message = resBody.error || 'Er is een onbekende fout opgetreden'
+	UIkit.notification({message, status: 'danger'})
 }
-
-const attachInviteFormListeners = () => {
-	const inviteForm = document.querySelector('form[data-invite-form]')
-	if (!inviteForm) {
-		return console.debug('No invite-form found on this page, skipping event listener attachment')
-	}
-
-	inviteForm.addEventListener('submit', async (e) => {
-		e.preventDefault()
-		const groupId = inviteForm.getAttribute('data-group')
-		const inviteeEmail = new FormData(e.target).get('email')
-
-		try {
-			await inviteUserToGroup(groupId, inviteeEmail)
-			// window.location.reload()
-		} catch (err) {
-			console.error(err)
-		}
-	})
-}
-
-attachInviteFormListeners()
 
 const dynamicallyImportCss = (url) => {
 	const el = document.createElement('link')
@@ -118,3 +91,24 @@ UIkit.util.on('[data-url-tab]', 'show', (e) => {
 	url.searchParams.set('tab', tabIndex)
 	history.replaceState({}, '', url)
 })
+
+
+const attachInviteFormListeners = () => {
+	const inviteForm = document.querySelector('[data-form="invite"]')
+	if (!inviteForm) {
+		return console.debug('No invite-form found on this page, skipping event listener attachment')
+	}
+
+	inviteForm.addEventListener('submit', async e => {
+		e.preventDefault()
+		const resp = await fetch('/invite', {
+			method: 'POST',
+			body: new FormData(e.target)
+		})
+		const body = await resp.json()
+		if (!body.ok) {
+			handleApiError(body)
+		}
+	})
+}
+attachInviteFormListeners()

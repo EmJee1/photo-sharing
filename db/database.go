@@ -34,6 +34,6 @@ func Open() error {
 func AutoMigrate() {
 	err := DB.AutoMigrate(&model.User{}, &model.Group{}, &model.GroupInvite{}, &model.Post{})
 	if err != nil {
-		log.Fatal("Failed to execute auto-migrate on DB")
+		log.Fatal("Failed to execute auto-migrate on DB" + err.Error())
 	}
 }

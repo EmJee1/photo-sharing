@@ -8,15 +8,24 @@ import (
 	"strconv"
 )
 
+func getGroupId(context echo.Context) (uint64, error) {
+	groupId := context.FormValue("groupId")
+	if groupId == "" {
+		groupId = context.Param("id")
+	}
+
+	return strconv.ParseUint(groupId, 10, 64)
+}
+
 func IsGroupUser(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(context echo.Context) error {
 		userId := context.Get("userId").(uint)
-		groupId, parseErr := strconv.ParseUint(context.Param("id"), 10, 64)
+		groupId, err := getGroupId(context)
 
 		var isGroupUser bool
 		repository.UserIsGroupMember(userId, uint(groupId), &isGroupUser)
 
-		if !isGroupUser || parseErr != nil {
+		if !isGroupUser || err != nil {
 			return echoview.Render(context, http.StatusNotFound, "404", echo.Map{
 				"title": "Not Found",
 			})

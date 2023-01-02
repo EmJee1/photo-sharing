@@ -14,15 +14,16 @@ func GetUser(userId uint, dest interface{}, preloads ...string) error {
 		query = query.Preload(p)
 	}
 
-	return query.Find(dest).Error
+	return query.First(dest).Error
 }
 
 func GetUserByEmail(email string, dest interface{}) error {
-	return db.DB.
+	err := db.DB.
 		Model(&model.User{}).
 		Where("email = ?", email).
 		First(dest).
 		Error
+	return err
 }
 
 func UserIsGroupMember(userId uint, groupId uint, dest interface{}) error {

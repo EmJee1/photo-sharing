@@ -9,6 +9,6 @@ type User struct {
 	Username     string
 	CreatedAt    time.Time
 	Posts        []Post
-	Groups       []*Group      `gorm:"many2many:group_users;"`
-	GroupInvites []GroupInvite `gorm:"foreignKey:InvitedBy"`
+	Groups       []Group       `gorm:"many2many:group_users;"`
+	GroupInvites []GroupInvite `gorm:"foreignKey:InvitedByID"`
 }
