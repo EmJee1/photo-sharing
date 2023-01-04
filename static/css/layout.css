@@ -10,6 +10,30 @@
 	animation: heartbeat 2s ease-in-out alternate infinite;
 }
 
+.post-actions {
+	display: flex;
+	justify-content: flex-start;
+	gap: 1rem;
+}
+
+.post-action {
+	border: none;
+	background: transparent;
+	cursor: pointer;
+	display: flex;
+	gap: 0.4rem;
+	color: #999;
+}
+
+.post-action.active {
+	color: black;
+}
+
+.post-actions > hr {
+	height: auto;
+	margin: 0;
+}
+
 @keyframes heartbeat {
 	from {
 		scale: 1;
