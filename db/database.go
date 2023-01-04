@@ -32,7 +32,7 @@ func Open() error {
 }
 
 func AutoMigrate() {
-	err := DB.AutoMigrate(&model.User{}, &model.Group{}, &model.GroupInvite{}, &model.Post{})
+	err := DB.AutoMigrate(&model.User{}, &model.Group{}, &model.Invite{}, &model.Post{})
 	if err != nil {
 		log.Fatal("Failed to execute auto-migrate on DB" + err.Error())
 	}

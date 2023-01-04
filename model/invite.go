@@ -1,6 +1,6 @@
 package model
 
-type GroupInvite struct {
+type Invite struct {
 	ID          uint
 	UserID      uint
 	User        User

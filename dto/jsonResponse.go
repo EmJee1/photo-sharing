@@ -12,6 +12,6 @@ type SuccessResponse struct {
 }
 
 type GetInvitesSuccessResponse struct {
-	Invites []model.GroupInvite `json:"invites"`
+	Invites []model.Invite `json:"invites"`
 	SuccessResponse
 }

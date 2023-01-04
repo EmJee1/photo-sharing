@@ -24,7 +24,7 @@ func PostInvite(context echo.Context) error {
 	}
 
 	group := &model.Group{}
-	err := repository.GetGroup(uint(groupId), &group, "Users", "GroupInvites", "Posts.User")
+	err := repository.GetGroup(uint(groupId), &group, "Users", "Invites", "Posts.User")
 
 	if err != nil {
 		return context.JSON(http.StatusNotFound, dto.ErrorResponse{
@@ -34,7 +34,7 @@ func PostInvite(context echo.Context) error {
 	}
 
 	var alreadyInvited, alreadyInGroup bool
-	for _, inv := range group.GroupInvites {
+	for _, inv := range group.Invites {
 		if inv.UserID == uint(user.ID) {
 			alreadyInvited = true
 		}
@@ -52,8 +52,8 @@ func PostInvite(context echo.Context) error {
 		})
 	}
 
-	groupInvite := model.GroupInvite{GroupID: uint(groupId), UserID: uint(user.ID), InvitedByID: invitedById}
-	db.DB.Create(&groupInvite)
+	invite := model.Invite{GroupID: uint(groupId), UserID: uint(user.ID), InvitedByID: invitedById}
+	db.DB.Create(&invite)
 
 	return context.JSON(http.StatusOK, dto.SuccessResponse{
 		Ok: true,
@@ -62,7 +62,7 @@ func PostInvite(context echo.Context) error {
 
 func GetInvites(context echo.Context) error {
 	userId := context.Get("userId").(uint)
-	var invites []model.GroupInvite
+	var invites []model.Invite
 	repository.GetInvites(userId, &invites, "Group")
 
 	return context.JSON(http.StatusOK, dto.GetInvitesSuccessResponse{
@@ -76,7 +76,7 @@ func PostInviteRespond(context echo.Context) error {
 	accepted := context.FormValue("action") == "accept"
 	userId := context.Get("userId").(uint)
 
-	invite := &model.GroupInvite{}
+	invite := &model.Invite{}
 	repository.GetInvite(uint(inviteId), &invite)
 
 	if userId != invite.UserID {
