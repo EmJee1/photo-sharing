@@ -70,3 +70,29 @@ func GetInvites(context echo.Context) error {
 		Invites:         invites,
 	})
 }
+
+func PostInviteRespond(context echo.Context) error {
+	inviteId, _ := strconv.ParseUint(context.FormValue("inviteId"), 10, 64)
+	accepted := context.FormValue("action") == "accept"
+	userId := context.Get("userId").(uint)
+
+	invite := &model.GroupInvite{}
+	repository.GetInvite(uint(inviteId), &invite)
+
+	if userId != invite.UserID {
+		return context.JSON(http.StatusForbidden, dto.ErrorResponse{
+			Ok:    false,
+			Error: "Die uitnodiging is niet aan jou verstuurd",
+		})
+	}
+
+	if accepted {
+		repository.AddUserToGroup(invite.GroupID, userId)
+	}
+
+	repository.DeleteInvite(uint(inviteId))
+
+	return context.JSON(http.StatusOK, dto.SuccessResponse{
+		Ok: true,
+	})
+}

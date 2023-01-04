@@ -1,4 +1,7 @@
 const handleApiError = (resBody) => {
+	if (resBody.ok) {
+		return
+	}
 	const message = resBody.error || 'Er is een onbekende fout opgetreden'
 	UIkit.notification({message, status: 'danger'})
 }
@@ -106,16 +109,56 @@ const attachInviteFormListeners = () => {
 			body: new FormData(e.target)
 		})
 		const body = await resp.json()
-		if (!body.ok) {
-			handleApiError(body)
-		}
+		handleApiError(body)
 	})
 }
 attachInviteFormListeners()
 
+const respondToInvite = async (accept, inviteId) => {
+	clearCacheInvites()
+	const formData = new FormData()
+	formData.append('inviteId', inviteId)
+	formData.append('action', accept ? 'accept' : 'reject')
+	const resp = await fetch('/invite/respond', {
+		body: formData,
+		method: 'POST'
+	})
+	const body = await resp.json()
+	handleApiError(body)
+	if (body.ok) {
+		window.location.reload()
+	}
+}
+
+const createNotifcations = (invites) => {
+	invites.forEach(invite => {
+		const li = document.createElement('li')
+		const p = document.createElement('p')
+		p.classList.add('uk-margin-small-bottom')
+		p.innerText = `Je bent uitgenodigd voor de groep: ${invite.Group.Name}`
+		const actions = document.createElement('div')
+		actions.classList.add('uk-flex', 'uk-flex-between')
+		const accept = document.createElement('button')
+		accept.classList.add('uk-button', 'uk-button-primary', 'uk-button-small')
+		accept.innerText = 'Accepteren'
+		accept.addEventListener('click', () => respondToInvite(true, invite.ID))
+		const reject = document.createElement('button')
+		reject.classList.add('uk-button', 'uk-button-danger', 'uk-button-small')
+		reject.innerText = 'Afwijzen'
+		reject.addEventListener('click', () => respondToInvite(false, invite.ID))
+		actions.append(accept, reject)
+		li.append(p, actions)
+		document.querySelector('[data-notifications-list]').append(li)
+	})
+}
+
 const setCacheInvites = (invites) => {
 	sessionStorage.setItem('invites:cache-date', Date.now().toString())
 	sessionStorage.setItem('invites', JSON.stringify(invites))
+}
+const clearCacheInvites = () => {
+	sessionStorage.removeItem('invites:cache-date')
+	sessionStorage.removeItem('invites')
 }
 const getCacheInvites = () => {
 	const cacheDate = sessionStorage.getItem('invites:cache-date')
@@ -123,7 +166,7 @@ const getCacheInvites = () => {
 
 	// invalidate cache if the previous fetch is > 30 seconds ago
 	if (cacheDate && (Date.now() - cacheDate) > 30_000) {
-		return
+		return clearCacheInvites()
 	}
 
 	if (invites) {
@@ -143,5 +186,7 @@ const getInvites = async () => {
 		invites = await fetchInvites()
 		setCacheInvites(invites)
 	}
+
+	createNotifcations(invites)
 }
 void getInvites()

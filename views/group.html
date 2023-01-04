@@ -55,33 +55,37 @@
 			</li>
 			<li data-tab-index="1">
 				<div class="uk-column-1-2@s">
-					<h5>Vrienden</h5>
-					<ul class="uk-list">
-              {{ range .group.Users }}
-								<li class="uk-grid-small uk-flex-middle" uk-grid>
-									<div class="uk-width-auto">
-										<img class="uk-comment-avatar uk-border-circle"
-												 src="https://avatars.dicebear.com/api/initials/{{ .Username }}.svg"
-												 width="30" height="30" alt="">
-									</div>
-									<p class="uk-margin-remove text-overflow-dots">{{ .Username }} ({{ .Email }})</p>
-								</li>
-              {{ end }}
-					</ul>
+					<div>
+						<h5>Vrienden</h5>
+						<ul class="uk-list">
+                {{ range .group.Users }}
+									<li class="uk-grid-small uk-flex-middle" uk-grid>
+										<div class="uk-width-auto">
+											<img class="uk-comment-avatar uk-border-circle"
+													 src="https://avatars.dicebear.com/api/initials/{{ .Username }}.svg"
+													 width="30" height="30" alt="">
+										</div>
+										<p class="uk-margin-remove text-overflow-dots">{{ .Username }} ({{ .Email }})</p>
+									</li>
+                {{ end }}
+						</ul>
+					</div>
 
-					<h5>Uitgenodigd</h5>
-					<ul class="uk-list">
-              {{ range .group.GroupInvites }}
-								<li class="uk-grid-small uk-flex-middle" uk-grid>
-									<div class="uk-width-auto">
-										<img class="uk-comment-avatar uk-border-circle"
-												 src="https://avatars.dicebear.com/api/initials/{{ .User.Username }}.svg"
-												 width="30" height="30" alt="">
-									</div>
-									<p class="uk-margin-remove text-overflow-dots">{{ .User.Username }} ({{ .User.Email }})</p>
-								</li>
-              {{ end }}
-					</ul>
+					<div>
+						<h5>Uitgenodigd</h5>
+						<ul class="uk-list">
+                {{ range .group.GroupInvites }}
+									<li class="uk-grid-small uk-flex-middle" uk-grid>
+										<div class="uk-width-auto">
+											<img class="uk-comment-avatar uk-border-circle"
+													 src="https://avatars.dicebear.com/api/initials/{{ .User.Username }}.svg"
+													 width="30" height="30" alt="">
+										</div>
+										<p class="uk-margin-remove text-overflow-dots">{{ .User.Username }} ({{ .User.Email }})</p>
+									</li>
+                {{ end }}
+						</ul>
+					</div>
 				</div>
 
 				<h5>Nieuwe vrienden toevoegen</h5>

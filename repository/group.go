@@ -16,3 +16,11 @@ func GetGroup(groupId uint, dest interface{}, preloads ...string) error {
 
 	return query.First(dest).Error
 }
+
+func AddUserToGroup(groupId uint, userId uint) error {
+	err := db.DB.
+		Model(&model.Group{ID: groupId}).
+		Association("Users").
+		Append(&model.User{ID: userId})
+	return err
+}
