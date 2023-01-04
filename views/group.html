@@ -10,7 +10,7 @@
 	<div>
 		<ul class="uk-tab" data-uk-tab="{connect:'#group-tabs'}">
 			<li class="uk-active"><a>Foto's</a></li>
-			<li><a>Vrienden</a></li>
+			<li><a>Deelnemers</a></li>
 		</ul>
 		<ul id="group-tabs" class="uk-switcher uk-margin" data-url-tab>
 			<li data-tab-index="0">
@@ -56,7 +56,7 @@
 			<li data-tab-index="1">
 				<div class="uk-grid-medium" uk-grid>
 					<div class="uk-width-1-2">
-						<h5>Vrienden</h5>
+						<h5>Deelnemers</h5>
 						<ul class="uk-list">
                 {{ range .group.Users }}
 									<li class="uk-grid-small uk-flex-middle" uk-grid>
@@ -72,7 +72,7 @@
 					</div>
 
 					<div class="uk-width-1-2">
-						<h5>Uitgenodigd</h5>
+						<h5>Uitgenodigden</h5>
 						<ul class="uk-list">
                 {{ range .group.GroupInvites }}
 									<li class="uk-grid-small uk-flex-middle" uk-grid>
@@ -88,14 +88,16 @@
 					</div>
 				</div>
 
-				<h5>Nieuwe vrienden toevoegen</h5>
+				<hr class="uk-margin-medium-top uk-margin-medium-bottom">
+
+				<h5 class="uk-margin-small-bottom uk-margin-remove-top">Deelnemers uitnodigen</h5>
 				<form data-form="invite">
 					<input type="hidden" name="groupId" value="{{ .group.ID }}">
-					<div class="uk-margin-small">
-						<label class="uk-form-label" for="email">Email</label>
-						<input class="uk-input uk-form-small" type="email" name="email" id="email" required>
+					<label class="uk-form-label" for="email">Email</label>
+					<div class="uk-flex">
+						<input class="uk-input" type="email" name="email" id="email" required>
+						<button class="uk-button uk-button-primary" type="submit">Uitnodigen</button>
 					</div>
-					<button class="uk-button uk-button-small uk-button-primary" type="submit">Uitnodigen</button>
 				</form>
 			</li>
 		</ul>
