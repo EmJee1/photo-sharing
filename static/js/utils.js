@@ -90,10 +90,12 @@ const attachCreatePostListeners = () => {
 attachCreatePostListeners()
 
 const attachCreateCommentListener = () => {
-	const form = document.querySelector('[data-comment-post]')
-	form.addEventListener('submit', async (e) => {
-		e.preventDefault()
-		await apiRequest('/comment', new FormData(e.target), 'POST')
+	const forms = document.querySelectorAll('[data-comment-post]')
+	forms.forEach(form => {
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault()
+			await apiRequest('/comment', new FormData(e.target), 'POST')
+		})
 	})
 }
 attachCreateCommentListener()
