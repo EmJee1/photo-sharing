@@ -17,8 +17,10 @@
 				</div>
 			</div>
 
-			<div>
-				<img src="/{{ .Post.Filepath }}" width="1800" height="1200" alt="">
+			<div uk-lightbox>
+				<a class="uk-inline" href="/{{ .Post.Filepath }}" data-caption="{{ .Post.Caption }}">
+					<img src="/{{ .Post.Filepath }}" width="1800" height="1200" alt="">
+				</a>
 			</div>
 
 			<div class="uk-card-body uk-padding-small">
