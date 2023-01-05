@@ -1,15 +1,13 @@
 package main
 
 import (
-	"github.com/foolin/goview"
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	"html/template"
 	"photo-sharing/db"
 	"photo-sharing/handler"
 	"photo-sharing/middleware"
-	"photo-sharing/model"
+	"photo-sharing/util"
 )
 
 func main() {
@@ -20,22 +18,7 @@ func main() {
 		e.Logger.Fatal("Error loading .env file")
 	}
 
-	mw := echoview.NewMiddleware(goview.Config{
-		Root:         "views",
-		Extension:    ".html",
-		Master:       "layouts/master",
-		DisableCache: true,
-		Funcs: template.FuncMap{
-			"userLikedPost": func(userId uint, post model.Post) bool {
-				for _, u := range post.Likes {
-					if u.ID == userId {
-						return true
-					}
-				}
-				return false
-			},
-		},
-	})
+	mw := echoview.NewMiddleware(util.GoviewConfig)
 
 	e.Use(mw)
 	e.Static("/css", "static/css")

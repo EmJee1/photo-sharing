@@ -1,0 +1,45 @@
+{{ define "post" }}
+	<div>
+		<div class="uk-card uk-card-default">
+			<div class="uk-card-header">
+				<div class="uk-grid-small uk-flex-middle" uk-grid>
+					<div class="uk-width-auto">
+						<img class="uk-border-circle" width="40" height="40"
+								 src="https://avatars.dicebear.com/api/initials/{{ .Post.User.Username }}.svg" alt="Avatar">
+					</div>
+					<div class="uk-width-expand">
+						<h3 class="uk-card-title uk-text-default uk-margin-remove-bottom text-overflow-dots">
+                {{ .Post.User.Username }}
+						</h3>
+						<p class="uk-text-meta uk-margin-remove-top">
+							<time datetime="{{ .Post.CreatedAt }}">{{ .Post.CreatedAt.Format "02 Jan, 2006" }}</time>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<img src="/{{ .Post.Filepath }}" width="1800" height="1200" alt="">
+			</div>
+
+			<div class="uk-card-body uk-padding-small">
+				<div class="post-actions">
+					<button class="post-action {{ if userLikedPost $.UserID .Post }}active{{ end }}"
+									data-like-post="{{ .Post.ID }}">
+						<span uk-icon="icon: triangle-up"></span>
+						<span data-like-count>
+                          {{ len .Post.Likes }}
+												</span>
+					</button>
+					<hr class="uk-divider-vertical">
+					<button class="post-action active">
+						<span uk-icon="icon: comments"></span>
+						10
+					</button>
+				</div>
+				<p class="text-overflow-dots">{{ .Post.Caption }}</p>
+			</div>
+
+		</div>
+	</div>
+{{ end }}
