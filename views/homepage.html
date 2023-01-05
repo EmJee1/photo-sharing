@@ -13,7 +13,16 @@
 		<li><a>Groepen</a></li>
 	</ul>
 	<ul id="group-tabs" class="uk-switcher uk-margin" data-url-tab>
-		<li data-tab-index="0"></li>
+		<li data-tab-index="0">
+			<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
+					 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
+          {{ range .feed }}
+              {{ template "post" dict "Post" . "UserID" $.userId }}
+          {{ else }}
+						<p>Je bent nog geen deelnemer van een groep met foto's</p>
+          {{ end }}
+			</div>
+		</li>
 		<li data-tab-index="1">
 			<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
 					 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
