@@ -10,5 +10,6 @@ type Post struct {
 	User      User
 	GroupID   uint
 	Likes     []User `gorm:"many2many:likes;"`
+	Comments  []Comment
 	CreatedAt time.Time
 }
