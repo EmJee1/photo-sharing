@@ -90,6 +90,10 @@ setTabOnPageLoad()
 
 UIkit.util.on('[data-url-tab]', 'show', (e) => {
 	const tabIndex = e.target.getAttribute('data-tab-index')
+	if (!tabIndex) {
+		// prevent setting a tab value of 'null' if no data-tab-index attribute is set
+		return
+	}
 	const url = new URL(window.location)
 	url.searchParams.set('tab', tabIndex)
 	history.replaceState({}, '', url)
