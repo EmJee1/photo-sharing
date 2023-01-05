@@ -114,6 +114,31 @@ const attachInviteFormListeners = () => {
 }
 attachInviteFormListeners()
 
+const attachPostLikeButtonListeners = () => {
+	const likeButtons = document.querySelectorAll('[data-like-post]')
+	likeButtons.forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const postId = btn.getAttribute('data-like-post')
+			const likeCountEl = btn.querySelector('[data-like-count]')
+			const crrntLikes = Number(likeCountEl.innerText)
+			const formData = new FormData()
+			formData.append('postId', postId)
+			const resp = await fetch('/like', {method: 'POST', body: formData})
+			const body = await resp.json()
+			handleApiError(body)
+			if (body.ok) {
+				if (btn.classList.contains('active')) {
+					likeCountEl.innerText = crrntLikes - 1
+				} else {
+					likeCountEl.innerText = crrntLikes + 1
+				}
+				btn.classList.toggle('active')
+			}
+		})
+	})
+}
+attachPostLikeButtonListeners()
+
 const respondToInvite = async (accept, inviteId) => {
 	clearCacheInvites()
 	const formData = new FormData()

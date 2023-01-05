@@ -48,9 +48,12 @@
 
 									<div class="uk-card-body uk-padding-small">
 										<div class="post-actions">
-											<button class="post-action">
+											<button class="post-action {{ if userLikedPost $.userId . }}active{{ end }}"
+															data-like-post="{{ .ID }}">
 												<span uk-icon="icon: triangle-up"></span>
-												10
+												<span data-like-count>
+                          {{ len .Likes }}
+												</span>
 											</button>
 											<hr class="uk-divider-vertical">
 											<button class="post-action active">

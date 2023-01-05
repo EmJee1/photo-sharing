@@ -13,7 +13,7 @@ func GetHomepage(context echo.Context) error {
 	repository.GetUser(
 		context.Get("userId").(uint),
 		&user,
-		"Groups.Posts",
+		"Groups.Posts.Likes",
 	)
 
 	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{

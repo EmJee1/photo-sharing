@@ -5,9 +5,11 @@ import (
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"html/template"
 	"photo-sharing/db"
 	"photo-sharing/handler"
 	"photo-sharing/middleware"
+	"photo-sharing/model"
 )
 
 func main() {
@@ -23,6 +25,16 @@ func main() {
 		Extension:    ".html",
 		Master:       "layouts/master",
 		DisableCache: true,
+		Funcs: template.FuncMap{
+			"userLikedPost": func(userId uint, post model.Post) bool {
+				for _, u := range post.Likes {
+					if u.ID == userId {
+						return true
+					}
+				}
+				return false
+			},
+		},
 	})
 
 	e.Use(mw)
@@ -48,6 +60,7 @@ func main() {
 	e.GET("/invite", handler.GetInvites, middleware.IsAuthenticated)
 	e.POST("/invite", handler.PostInvite, middleware.IsAuthenticated, middleware.IsGroupUser)
 	e.POST("/invite/respond", handler.PostInviteRespond, middleware.IsAuthenticated)
+	e.POST("/like", handler.PostLike, middleware.IsAuthenticated)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
