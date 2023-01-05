@@ -19,7 +19,7 @@
           {{ range .feed }}
               {{ template "post" dict "Post" . "UserID" $.userId }}
           {{ else }}
-						<p>Je bent nog geen deelnemer van een groep met foto's</p>
+						<p>Je feed is nog leeg</p>
           {{ end }}
 			</div>
 		</li>
