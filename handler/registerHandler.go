@@ -29,11 +29,15 @@ func PostRegister(context echo.Context) error {
 		})
 	}
 
-	db.DB.Create(&model.User{Email: email, Password: passwordHash, Username: username})
+	err = db.DB.Create(&model.User{Email: email, Password: passwordHash, Username: username}).Error
+	if err != nil {
+		return echoview.Render(context, http.StatusBadRequest, "register", echo.Map{
+			"error":      "Controleer de velden en probeer opnieuw",
+			"title":      "Register",
+			"hideNavbar": true,
+		})
+	}
 
 	// TODO: auto-login after account creation
-	return echoview.Render(context, http.StatusCreated, "login", echo.Map{
-		"title":      "Login",
-		"hideNavbar": true,
-	})
+	return context.Redirect(http.StatusSeeOther, "/login")
 }
