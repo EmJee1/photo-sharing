@@ -1,9 +1,29 @@
 const handleApiError = (resBody) => {
-	if (resBody.ok) {
+	if (resBody?.ok) {
 		return
 	}
-	const message = resBody.error || 'Er is een onbekende fout opgetreden'
+	const message = resBody?.error || 'Er is een onbekende fout opgetreden'
 	UIkit.notification({message, status: 'danger'})
+}
+
+const apiRequest = async (url, formData, method = 'GET') => {
+	let body
+	try {
+		const resp = await fetch(url, {method, body: formData})
+		body = await resp.json()
+	} catch (_) {
+		console.log('Landed in catch:', _)
+		handleApiError()
+		return
+	}
+
+	console.log('Body:', body)
+	if (!body.ok) {
+		handleApiError(body)
+		return
+	}
+
+	window.location.reload()
 }
 
 const dynamicallyImportCss = (url) => {
@@ -63,19 +83,20 @@ const attachCreatePostListeners = () => {
 		cropper.getCroppedCanvas().toBlob(async blob => {
 			const formData = new FormData(e.target)
 			formData.set('image', blob, 'img.png')
-
-			try {
-				await fetch('/post', {
-					method: 'POST',
-					body: formData,
-				})
-			} catch (e) {
-				console.error(e)
-			}
+			await apiRequest('/post', formData, 'POST')
 		})
 	})
 }
 attachCreatePostListeners()
+
+const attachCreateCommentListener = () => {
+	const form = document.querySelector('[data-comment-post]')
+	form.addEventListener('submit', async (e) => {
+		e.preventDefault()
+		await apiRequest('/comment', new FormData(e.target), 'POST')
+	})
+}
+attachCreateCommentListener()
 
 const setTabOnPageLoad = () => {
 	const tabInUrl = new URL(window.location).searchParams.get('tab')
@@ -99,7 +120,6 @@ UIkit.util.on('[data-url-tab]', 'show', (e) => {
 	history.replaceState({}, '', url)
 })
 
-
 const attachInviteFormListeners = () => {
 	const inviteForm = document.querySelector('[data-form="invite"]')
 	if (!inviteForm) {
@@ -108,12 +128,7 @@ const attachInviteFormListeners = () => {
 
 	inviteForm.addEventListener('submit', async e => {
 		e.preventDefault()
-		const resp = await fetch('/invite', {
-			method: 'POST',
-			body: new FormData(e.target)
-		})
-		const body = await resp.json()
-		handleApiError(body)
+		await apiRequest('/invite', new FormData(e.target), 'POST')
 	})
 }
 attachInviteFormListeners()
@@ -148,15 +163,7 @@ const respondToInvite = async (accept, inviteId) => {
 	const formData = new FormData()
 	formData.append('inviteId', inviteId)
 	formData.append('action', accept ? 'accept' : 'reject')
-	const resp = await fetch('/invite/respond', {
-		body: formData,
-		method: 'POST'
-	})
-	const body = await resp.json()
-	handleApiError(body)
-	if (body.ok) {
-		window.location.reload()
-	}
+	await apiRequest('/invite/respond', formData, 'POST')
 }
 
 const createNotifcations = (invites) => {

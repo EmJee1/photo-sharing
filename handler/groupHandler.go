@@ -16,7 +16,7 @@ func GetGroup(context echo.Context) error {
 	userId := context.Get("userId").(uint)
 
 	group := &model.Group{}
-	err := repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts."+clause.Associations)
+	err := repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments.User", "Posts."+clause.Associations)
 
 	if err != nil {
 		return echoview.Render(context, http.StatusNotFound, "404", echo.Map{

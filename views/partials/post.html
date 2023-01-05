@@ -33,7 +33,7 @@
 					<hr class="uk-divider-vertical">
 					<button class="post-action active" uk-toggle="target: #offcanvas-comments-{{ .Post.ID }}">
 						<span uk-icon="icon: comments"></span>
-						10
+              {{ len .Post.Comments }}
 					</button>
 				</div>
 				<p class="text-overflow-dots">{{ .Post.Caption }}</p>
@@ -49,7 +49,18 @@
 			<h3 class="uk-margin-small-bottom">Post van {{ .Post.User.Username }}</h3>
 			<p class="uk-margin-remove-top">{{ .Post.Caption }}</p>
 			<hr>
-			{{ template "comment" }}
+        {{ range .Post.Comments }}
+            {{ template "comment" . }}
+						<hr>
+        {{ end}}
+			<form data-comment-post>
+				<input type="hidden" name="postId" value="{{ .Post.ID }}">
+				<div class="uk-margin">
+					<label class="uk-form-label" for="comment-body">Schrijf een comment</label>
+					<textarea class="uk-textarea" name="body" id="comment-body"></textarea>
+				</div>
+				<button class="uk-button uk-button-text">Plaats comment</button>
+			</form>
 		</div>
 	</div>
 {{ end }}
