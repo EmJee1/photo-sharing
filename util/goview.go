@@ -10,7 +10,7 @@ var GoviewConfig = goview.Config{
 	Root:         "views",
 	Extension:    ".html",
 	Master:       "layouts/master",
-	Partials:     []string{"partials/post"},
+	Partials:     []string{"partials/post", "partials/userIcon"},
 	DisableCache: true,
 	Funcs: template.FuncMap{
 		"userLikedPost": func(userId uint, post model.Post) bool {

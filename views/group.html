@@ -32,9 +32,7 @@
                 {{ range .group.Users }}
 									<li class="uk-grid-small uk-flex-middle" uk-grid>
 										<div class="uk-width-auto">
-											<img class="uk-comment-avatar uk-border-circle"
-													 src="https://avatars.dicebear.com/api/initials/{{ .Username }}.svg"
-													 width="30" height="30" alt="">
+                        {{ template "userIcon" dict "Username" .Username "Dimensions" "30" }}
 										</div>
 										<p class="uk-margin-remove text-overflow-dots">{{ .Username }} ({{ .Email }})</p>
 									</li>
@@ -48,9 +46,7 @@
                 {{ range .group.Invites }}
 									<li class="uk-grid-small uk-flex-middle" uk-grid>
 										<div class="uk-width-auto">
-											<img class="uk-comment-avatar uk-border-circle"
-													 src="https://avatars.dicebear.com/api/initials/{{ .User.Username }}.svg"
-													 width="30" height="30" alt="">
+                        {{ template "userIcon" dict "Username" .User.Username "Dimensions" "30" }}
 										</div>
 										<p class="uk-margin-remove text-overflow-dots">{{ .User.Username }} ({{ .User.Email }})</p>
 									</li>
