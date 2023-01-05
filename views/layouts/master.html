@@ -3,15 +3,15 @@
 <html lang="nl">
 <head>
 	<title>{{ .title }} | PhotoShare</title>
-    {{ include "partials/head" }}
+    {{ include "layouts/head" }}
 </head>
 <body class="uk-margin-large-bottom">
 <div class="uk-container">
     {{ if not .hideNavbar }}
-    {{ include "partials/navbar" }}
+        {{ include "layouts/navbar" }}
     {{ end }}
     {{ template "content" . }}
 </div>
-{{ include "partials/footer" }}
+{{ include "layouts/footer" }}
 </body>
 </html>
