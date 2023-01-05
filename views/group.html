@@ -14,13 +14,12 @@
 		</ul>
 		<ul id="group-tabs" class="uk-switcher uk-margin" data-url-tab>
 			<li data-tab-index="0">
-          {{ if not .group.Posts }}
-						<p>Er zijn nog geen posts gedeeld in deze groep</p>
-          {{ end }}
 				<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
 						 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
             {{ range .group.Posts }}
                 {{ template "post" dict "Post" . "UserID" $.userId }}
+            {{ else }}
+							<p>Er zijn nog geen posts gedeeld in deze groep</p>
             {{ end }}
 				</div>
 			</li>
