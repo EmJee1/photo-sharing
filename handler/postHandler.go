@@ -2,11 +2,12 @@ package handler
 
 import (
 	"errors"
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
+	"photo-sharing/dto"
 	"photo-sharing/model"
+	"photo-sharing/repository"
 	"photo-sharing/util"
 	"strconv"
 )
@@ -17,11 +18,7 @@ func PostPost(context echo.Context) error {
 	groupId, _ := strconv.ParseUint(context.FormValue("group"), 10, 64)
 
 	var isMemberOfGroup bool
-	db.DB.
-		Select("count(*) > 0").
-		Table("group_users").
-		Where("group_id = ? AND user_id = ?", groupId, userId).
-		Find(&isMemberOfGroup)
+	repository.UserIsGroupMember(userId, uint(groupId), &isMemberOfGroup)
 
 	if !isMemberOfGroup {
 		return errors.New("user is not a member of that group")
@@ -44,5 +41,7 @@ func PostPost(context echo.Context) error {
 		GroupID:  uint(groupId),
 	})
 
-	return context.Redirect(http.StatusSeeOther, fmt.Sprintf("/group/%d", groupId))
+	return context.JSON(http.StatusCreated, dto.SuccessResponse{
+		Ok: true,
+	})
 }
