@@ -13,6 +13,20 @@
 						<time datetime="{{ .CreatedAt }}">{{ .CreatedAt.Format "02 Jan, 2006" }}</time>
 					</p>
 				</div>
+				<div class="uk-width-auto uk-margin-auto-left">
+					<button class="uk-icon-link uk-button uk-button-text" type="button">
+						<span uk-icon="more"></span>
+					</button>
+					<div uk-dropdown>
+						<ul class="uk-nav uk-dropdown-nav">
+							<li class="">
+								<a href="#" data-delete-comment="{{ .ID }}">
+									<span class="uk-margin-small-right" uk-icon="trash"></span> Verwijderen
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</header>
 		<div class="uk-comment-body">

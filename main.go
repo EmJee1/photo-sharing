@@ -45,6 +45,7 @@ func main() {
 	e.POST("/invite/respond", handler.PostInviteRespond, middleware.IsAuthenticated)
 	e.POST("/like", handler.PostLike, middleware.IsAuthenticated)
 	e.POST("/comment", handler.PostComment, middleware.IsAuthenticated)
+	e.DELETE("/comment", handler.DeleteComment, middleware.IsAuthenticated)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

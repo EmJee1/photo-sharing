@@ -34,3 +34,26 @@ func PostComment(context echo.Context) error {
 		Ok: true,
 	})
 }
+
+func DeleteComment(context echo.Context) error {
+	userId := context.Get("userId").(uint)
+	commentId, _ := strconv.ParseUint(context.FormValue("commentId"), 10, 64)
+
+	comment := &model.Comment{}
+	repository.GetComment(uint(commentId), &comment, "Post")
+
+	var isGroupUser bool
+	repository.UserIsGroupMember(userId, comment.Post.GroupID, &isGroupUser)
+
+	if !isGroupUser || comment.UserID != userId {
+		return context.JSON(http.StatusForbidden, dto.ErrorResponse{
+			Ok:    false,
+			Error: "Je hebt geen rechten om die comment te verwijderen",
+		})
+	}
+
+	db.DB.Delete(&model.Comment{ID: uint(commentId)})
+	return context.JSON(http.StatusOK, dto.SuccessResponse{
+		Ok: true,
+	})
+}
