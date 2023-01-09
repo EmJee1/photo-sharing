@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"photo-sharing/dto"
 	"photo-sharing/repository"
+	"photo-sharing/util"
 	"strconv"
-	"strings"
 )
 
 func getGroupId(context echo.Context) (uint64, error) {
@@ -29,7 +29,7 @@ func IsGroupUser(next echo.HandlerFunc) echo.HandlerFunc {
 
 		if !isGroupUser || err != nil {
 			// Send response in JSON if the request is an API request
-			if strings.HasPrefix(context.Request().URL.Path, "/api") {
+			if util.IsApiRoute(context) {
 				return context.JSON(http.StatusNotFound, dto.ErrorResponse{
 					Ok:    false,
 					Error: "Je hebt geen toegang tot die groep",
