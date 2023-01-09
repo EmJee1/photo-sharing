@@ -36,6 +36,10 @@ echo and goview.
 
 <!-- How to install this project (after having the prerequisites)? -->
 
+1. Copy the `.env.example` file in the root to `.env`
+2. Add a `JWT_SECRET`, a random string (about 40 chars)
+3. Run the steps below
+
 ```shell
 # Setup and run postgresql & pgadmin containers
 docker compose up -d
