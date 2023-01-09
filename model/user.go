@@ -12,4 +12,5 @@ type User struct {
 	Likes     []Post   `gorm:"many2many:likes;"`
 	Groups    []Group  `gorm:"many2many:group_users;"`
 	Invites   []Invite `gorm:"foreignKey:InvitedByID"`
+	Comments  []Comment
 }

@@ -66,7 +66,7 @@
 			<p class="uk-margin-remove-top">{{ .Post.Caption }}</p>
 			<hr>
         {{ range .Post.Comments }}
-            {{ template "comment" . }}
+            {{ template "comment" dict "Post" . "UserID" $.UserID }}
 						<hr>
         {{ end}}
 			<form data-comment-post>

@@ -21,6 +21,9 @@ var GoviewConfig = goview.Config{
 			}
 			return false
 		},
+		"canDeleteComment": func(comment model.Comment, userId uint) bool {
+			return comment.UserID == userId
+		},
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			dict := make(map[string]interface{}, len(values)/2)
 			for i := 0; i < len(values); i += 2 {

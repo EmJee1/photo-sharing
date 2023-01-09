@@ -3,34 +3,36 @@
 		<header class="uk-comment-header">
 			<div class="uk-grid-small uk-flex-middle" uk-grid>
 				<div class="uk-width-auto">
-            {{ template "userIcon" dict "Username" .User.Username "Dimensions" "40" }}
+            {{ template "userIcon" dict "Username" .Post.User.Username "Dimensions" "40" }}
 				</div>
 				<div class="uk-width-expand">
 					<h3 class="uk-card-title uk-text-default uk-margin-remove-bottom text-overflow-dots">
-              {{ .User.Username }}
+              {{ .Post.User.Username }}
 					</h3>
 					<p class="uk-text-meta uk-margin-remove-top">
-						<time datetime="{{ .CreatedAt }}">{{ .CreatedAt.Format "02 Jan, 2006" }}</time>
+						<time datetime="{{ .Post.CreatedAt }}">{{ .Post.CreatedAt.Format "02 Jan, 2006" }}</time>
 					</p>
 				</div>
-				<div class="uk-width-auto uk-margin-auto-left">
-					<button class="uk-icon-link uk-button uk-button-text" type="button">
-						<span uk-icon="more"></span>
-					</button>
-					<div uk-dropdown>
-						<ul class="uk-nav uk-dropdown-nav">
-							<li class="">
-								<a href="#" data-delete-comment="{{ .ID }}">
-									<span class="uk-margin-small-right" uk-icon="trash"></span> Verwijderen
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
+          {{ if canDeleteComment .Post .UserID }}
+						<div class="uk-width-auto uk-margin-auto-left">
+							<button class="uk-icon-link uk-button uk-button-text" type="button">
+								<span uk-icon="more"></span>
+							</button>
+							<div uk-dropdown>
+								<ul class="uk-nav uk-dropdown-nav">
+									<li class="">
+										<a href="#" data-delete-comment="{{ .Post.ID }}">
+											<span class="uk-margin-small-right" uk-icon="trash"></span> Verwijderen
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+          {{ end }}
 			</div>
 		</header>
 		<div class="uk-comment-body">
-			<p>{{ .Body }}</p>
+			<p>{{ .Post.Body }}</p>
 		</div>
 	</article>
 {{ end }}
