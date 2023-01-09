@@ -24,14 +24,7 @@ func PostInvite(context echo.Context) error {
 	}
 
 	group := &model.Group{}
-	err := repository.GetGroup(uint(groupId), &group, "Users", "Invites", "Posts.User")
-
-	if err != nil {
-		return context.JSON(http.StatusNotFound, dto.ErrorResponse{
-			Ok:    false,
-			Error: "De groep bestaat niet",
-		})
-	}
+	repository.GetGroup(uint(groupId), &group, "Users", "Invites", "Posts.User")
 
 	var alreadyInvited, alreadyInGroup bool
 	for _, inv := range group.Invites {
