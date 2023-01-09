@@ -38,7 +38,6 @@ func PostLike(context echo.Context) error {
 	if userLikedPost {
 		repository.DeleteLike(uint(postId), userId)
 	} else {
-		fmt.Printf("Creating like:\nUser: %v\nPost: %v\n", postId, userId)
 		repository.CreateLike(uint(postId), userId)
 	}
 
