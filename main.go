@@ -44,7 +44,7 @@ func main() {
 	// Routes in the API group should always return a JSON response
 	api := e.Group("/api")
 
-	api.POST("/post", handler.PostPost, middleware.IsAuthenticated)
+	api.POST("/post", handler.PostPost, middleware.IsAuthenticated, middleware.IsGroupUser)
 	api.DELETE("/post", handler.DeletePost, middleware.IsAuthenticated)
 	api.GET("/invite", handler.GetInvites, middleware.IsAuthenticated)
 	api.POST("/invite", handler.PostInvite, middleware.IsAuthenticated, middleware.IsGroupUser)

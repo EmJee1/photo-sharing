@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/db"
@@ -15,14 +14,7 @@ import (
 func PostPost(context echo.Context) error {
 	userId := context.Get("userId").(uint)
 	caption := context.FormValue("caption")
-	groupId, _ := strconv.ParseUint(context.FormValue("group"), 10, 64)
-
-	var isMemberOfGroup bool
-	repository.UserIsGroupMember(userId, uint(groupId), &isMemberOfGroup)
-
-	if !isMemberOfGroup {
-		return errors.New("user is not a member of that group")
-	}
+	groupId, _ := strconv.ParseUint(context.FormValue("groupId"), 10, 64)
 
 	file, err := context.FormFile("image")
 	if err != nil {
