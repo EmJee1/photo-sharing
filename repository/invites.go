@@ -6,28 +6,22 @@ import (
 )
 
 func GetInvite(inviteId uint, dest interface{}) error {
-	err := db.DB.
+	return db.DB.
 		Model(&model.Invite{}).
-		Where("id = ?", inviteId).
-		First(dest).
+		First(dest, inviteId).
 		Error
-	return err
 }
 
 func GetInvites(userId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.
-		Model(&model.Invite{}).
-		Where("user_id = ?", userId)
+	query := db.DB.Model(&model.Invite{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
 	}
 
-	err := query.Find(dest).Error
-	return err
+	return query.Find(dest, userId).Error
 }
 
 func DeleteInvite(inviteId uint) error {
-	err := db.DB.Delete(&model.Invite{}, inviteId).Error
-	return err
+	return db.DB.Delete(&model.Invite{}, inviteId).Error
 }

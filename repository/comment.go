@@ -6,12 +6,11 @@ import (
 )
 
 func GetComment(commentId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.
-		Model(&model.Comment{ID: commentId})
+	query := db.DB.Model(&model.Comment{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
 	}
 
-	return query.First(dest).Error
+	return query.First(dest, commentId).Error
 }

@@ -6,15 +6,13 @@ import (
 )
 
 func GetUser(userId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.
-		Model(&model.User{}).
-		Where("id = ?", userId)
+	query := db.DB.Model(&model.User{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
 	}
 
-	return query.First(dest).Error
+	return query.First(dest, userId).Error
 }
 
 func GetUserByEmail(email string, dest interface{}) error {
