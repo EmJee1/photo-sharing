@@ -14,20 +14,22 @@
 							<time datetime="{{ .Post.CreatedAt }}">{{ .Post.CreatedAt.Format "02 Jan, 2006" }}</time>
 						</p>
 					</div>
-					<div class="uk-width-auto uk-margin-auto-left">
-						<button class="uk-icon-link uk-button uk-button-text" type="button">
-							<span uk-icon="more"></span>
-						</button>
-						<div uk-dropdown="pos: bottom-left">
-							<ul class="uk-nav uk-dropdown-nav">
-								<li>
-									<a href="#" data-delete-post="{{ .Post.ID }}">
-										<span class="uk-margin-small-right" uk-icon="trash"></span> Verwijderen
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
+            {{ if canDeletePost .Post .UserID }}
+							<div class="uk-width-auto uk-margin-auto-left">
+								<button class="uk-icon-link uk-button uk-button-text" type="button">
+									<span uk-icon="more"></span>
+								</button>
+								<div uk-dropdown="pos: bottom-left">
+									<ul class="uk-nav uk-dropdown-nav">
+										<li>
+											<a href="#" data-delete-post="{{ .Post.ID }}">
+												<span class="uk-margin-small-right" uk-icon="trash"></span> Verwijderen
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+            {{ end }}
 				</div>
 			</div>
 
