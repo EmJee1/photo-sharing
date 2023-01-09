@@ -39,6 +39,7 @@ func main() {
 	e.GET("/logout", handler.GetLogout)
 	e.POST("/group", handler.PostGroup, middleware.IsAuthenticated)
 	e.GET("/group/:id", handler.GetGroup, middleware.IsAuthenticated, middleware.IsGroupUser)
+	e.GET("/settings", handler.GetSettings, middleware.IsAuthenticated)
 
 	// Routes in the API group should always return a JSON response
 	api := e.Group("/api")
