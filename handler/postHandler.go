@@ -45,3 +45,24 @@ func PostPost(context echo.Context) error {
 		Ok: true,
 	})
 }
+
+func DeletePost(context echo.Context) error {
+	userId := context.Get("userId").(uint)
+	postId, _ := strconv.ParseUint(context.FormValue("postId"), 10, 64)
+
+	post := &model.Post{}
+	repository.GetPost(uint(postId), &post)
+
+	if post.UserID != userId {
+		return context.JSON(http.StatusUnauthorized, dto.ErrorResponse{
+			Ok:    false,
+			Error: "Je hebt geen rechten om die post te verwijderen",
+		})
+	}
+
+	db.DB.Delete(model.Post{ID: uint(postId)})
+
+	return context.JSON(http.StatusOK, dto.SuccessResponse{
+		Ok: true,
+	})
+}

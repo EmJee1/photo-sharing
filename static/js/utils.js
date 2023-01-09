@@ -158,7 +158,7 @@ const attachPostLikeButtonListeners = () => {
 }
 attachPostLikeButtonListeners()
 
-const attachCommentDeleteListeners = () => {
+const attachDeleteListeners = () => {
 	const deleteCommentBtns = document.querySelectorAll('[data-delete-comment]')
 	deleteCommentBtns.forEach(btn => {
 		btn.addEventListener('click', async e => {
@@ -168,8 +168,18 @@ const attachCommentDeleteListeners = () => {
 			await apiRequest('comment', formData, 'DELETE')
 		})
 	})
+
+	const deletePostBtns = document.querySelectorAll('[data-delete-post]')
+	deletePostBtns.forEach(btn => {
+		btn.addEventListener('click', async e => {
+			e.preventDefault()
+			const formData = new FormData()
+			formData.append('postId', btn.getAttribute('data-delete-post'))
+			await apiRequest('post', formData, 'DELETE')
+		})
+	})
 }
-attachCommentDeleteListeners()
+attachDeleteListeners()
 
 const respondToInvite = async (accept, inviteId) => {
 	clearCacheInvites()
