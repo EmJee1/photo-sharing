@@ -9,7 +9,7 @@ const handleApiError = (resBody) => {
 const apiRequest = async (url, formData, method = 'GET') => {
 	let body
 	try {
-		const resp = await fetch(url, {method, body: formData})
+		const resp = await fetch(`/api/${url}`, {method, body: formData})
 		body = await resp.json()
 	} catch (_) {
 		console.log('Landed in catch:', _)
@@ -83,7 +83,7 @@ const attachCreatePostListeners = () => {
 		cropper.getCroppedCanvas().toBlob(async blob => {
 			const formData = new FormData(e.target)
 			formData.set('image', blob, 'img.png')
-			await apiRequest('/post', formData, 'POST')
+			await apiRequest('post', formData, 'POST')
 		})
 	})
 }
@@ -94,7 +94,7 @@ const attachCreateCommentListener = () => {
 	forms.forEach(form => {
 		form.addEventListener('submit', async (e) => {
 			e.preventDefault()
-			await apiRequest('/comment', new FormData(e.target), 'POST')
+			await apiRequest('comment', new FormData(e.target), 'POST')
 		})
 	})
 }
@@ -130,7 +130,7 @@ const attachInviteFormListeners = () => {
 
 	inviteForm.addEventListener('submit', async e => {
 		e.preventDefault()
-		await apiRequest('/invite', new FormData(e.target), 'POST')
+		await apiRequest('invite', new FormData(e.target), 'POST')
 	})
 }
 attachInviteFormListeners()
@@ -144,7 +144,7 @@ const attachPostLikeButtonListeners = () => {
 			const crrntLikes = Number(likeCountEl.innerText)
 			const formData = new FormData()
 			formData.append('postId', postId)
-			const resp = await fetch('/like', {method: 'POST', body: formData})
+			const resp = await fetch('/api/like', {method: 'POST', body: formData})
 			const body = await resp.json()
 			handleApiError(body)
 			if (body.ok) {
@@ -167,7 +167,7 @@ const attachCommentDeleteListeners = () => {
 			e.preventDefault()
 			const formData = new FormData()
 			formData.append('commentId', btn.getAttribute('data-delete-comment'))
-			await apiRequest('/comment', formData, 'DELETE')
+			await apiRequest('comment', formData, 'DELETE')
 		})
 	})
 }
@@ -178,7 +178,7 @@ const respondToInvite = async (accept, inviteId) => {
 	const formData = new FormData()
 	formData.append('inviteId', inviteId)
 	formData.append('action', accept ? 'accept' : 'reject')
-	await apiRequest('/invite/respond', formData, 'POST')
+	await apiRequest('invite/respond', formData, 'POST')
 }
 
 const createNotifcations = (invites) => {
@@ -226,7 +226,7 @@ const getCacheInvites = () => {
 }
 
 const fetchInvites = async () => {
-	const resp = await fetch('/invite')
+	const resp = await fetch('/api/invite')
 	const body = await resp.json()
 	return body.invites
 }

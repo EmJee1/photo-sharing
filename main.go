@@ -37,15 +37,19 @@ func main() {
 	e.GET("/register", handler.GetRegister)
 	e.POST("/register", handler.PostRegister)
 	e.GET("/logout", handler.GetLogout)
-	e.POST("/post", handler.PostPost, middleware.IsAuthenticated)
 	e.POST("/group", handler.PostGroup, middleware.IsAuthenticated)
 	e.GET("/group/:id", handler.GetGroup, middleware.IsAuthenticated, middleware.IsGroupUser)
-	e.GET("/invite", handler.GetInvites, middleware.IsAuthenticated)
-	e.POST("/invite", handler.PostInvite, middleware.IsAuthenticated, middleware.IsGroupUser)
-	e.POST("/invite/respond", handler.PostInviteRespond, middleware.IsAuthenticated)
-	e.POST("/like", handler.PostLike, middleware.IsAuthenticated)
-	e.POST("/comment", handler.PostComment, middleware.IsAuthenticated)
-	e.DELETE("/comment", handler.DeleteComment, middleware.IsAuthenticated)
+	e.POST("/post", handler.PostPost, middleware.IsAuthenticated)
+
+	// Routes in the API group should always return a JSON response
+	api := e.Group("/api")
+
+	api.GET("/invite", handler.GetInvites, middleware.IsAuthenticated)
+	api.POST("/invite", handler.PostInvite, middleware.IsAuthenticated, middleware.IsGroupUser)
+	api.POST("/invite/respond", handler.PostInviteRespond, middleware.IsAuthenticated)
+	api.POST("/like", handler.PostLike, middleware.IsAuthenticated)
+	api.POST("/comment", handler.PostComment, middleware.IsAuthenticated)
+	api.DELETE("/comment", handler.DeleteComment, middleware.IsAuthenticated)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
