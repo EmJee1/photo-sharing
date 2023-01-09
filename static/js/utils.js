@@ -12,12 +12,10 @@ const apiRequest = async (url, formData, method = 'GET') => {
 		const resp = await fetch(`/api/${url}`, {method, body: formData})
 		body = await resp.json()
 	} catch (_) {
-		console.log('Landed in catch:', _)
 		handleApiError()
 		return
 	}
 
-	console.log('Body:', body)
 	if (!body.ok) {
 		handleApiError(body)
 		return
