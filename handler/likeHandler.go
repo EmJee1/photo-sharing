@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"photo-sharing/dto"
