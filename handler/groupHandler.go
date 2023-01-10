@@ -37,7 +37,10 @@ func PostGroup(context echo.Context) error {
 	userId := context.Get("userId").(uint)
 
 	group := model.Group{Name: name, Description: description}
-	db.DB.Create(&group).Association("Users").Append([]*model.User{{ID: userId}})
+	db.DB.Create(&group)
+
+	groupUser := model.GroupUser{UserID: userId, GroupID: group.ID, IsAdmin: true}
+	db.DB.Create(&groupUser)
 
 	context.Redirect(http.StatusSeeOther, "/")
 	return nil

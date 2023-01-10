@@ -32,6 +32,8 @@ func Open() error {
 }
 
 func AutoMigrate() {
+	DB.SetupJoinTable(&model.User{}, "Groups", &model.GroupUser{})
+	DB.SetupJoinTable(&model.Group{}, "Users", &model.GroupUser{})
 	err := DB.AutoMigrate(&model.User{}, &model.Group{}, &model.Invite{}, &model.Post{}, &model.Comment{})
 	if err != nil {
 		log.Fatal("Failed to execute auto-migrate on DB" + err.Error())
