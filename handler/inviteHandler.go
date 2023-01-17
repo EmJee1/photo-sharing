@@ -28,12 +28,12 @@ func PostInvite(context echo.Context) error {
 
 	var alreadyInvited, alreadyInGroup bool
 	for _, inv := range group.Invites {
-		if inv.UserID == uint(user.ID) {
+		if inv.UserID == user.ID {
 			alreadyInvited = true
 		}
 	}
 	for _, usr := range group.Users {
-		if usr.ID == uint(user.ID) {
+		if usr.ID == user.ID {
 			alreadyInGroup = true
 		}
 	}
