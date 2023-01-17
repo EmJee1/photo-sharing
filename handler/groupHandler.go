@@ -15,19 +15,16 @@ func GetGroup(context echo.Context) error {
 	groupId, _ := strconv.ParseUint(context.Param("id"), 10, 64)
 	userId := context.Get("userId").(uint)
 
-	group := &model.Group{}
-	err := repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments.User", "Posts."+clause.Associations)
+	user := &model.User{}
+	repository.GetUser(userId, &user)
 
-	if err != nil {
-		return echoview.Render(context, http.StatusNotFound, "404", echo.Map{
-			"title": "Not Found",
-		})
-	}
+	group := &model.Group{}
+	repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments.User", "Posts."+clause.Associations)
 
 	return echoview.Render(context, http.StatusOK, "group", echo.Map{
-		"title":  group.Name,
-		"group":  group,
-		"userId": userId,
+		"title": group.Name,
+		"group": group,
+		"user":  user,
 	})
 }
 

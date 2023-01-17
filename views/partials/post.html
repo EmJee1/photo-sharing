@@ -14,7 +14,7 @@
 							<time datetime="{{ .Post.CreatedAt }}">{{ .Post.CreatedAt.Format "02 Jan, 2006" }}</time>
 						</p>
 					</div>
-            {{ if canDeletePost .Post .UserID }}
+            {{ if canDeletePost .Post .User.ID }}
 							<div class="uk-width-auto uk-margin-auto-left">
 								<button class="uk-icon-link uk-button uk-button-text" type="button">
 									<span uk-icon="more"></span>
@@ -41,7 +41,7 @@
 
 			<div class="uk-card-body uk-padding-small">
 				<div class="post-actions">
-					<button class="post-action {{ if userLikedPost $.UserID .Post }}active{{ end }}"
+					<button class="post-action {{ if userLikedPost .User.ID .Post }}active{{ end }}"
 									data-like-post="{{ .Post.ID }}">
 						<span uk-icon="icon: triangle-up"></span>
 						<span data-like-count>
@@ -68,7 +68,7 @@
 			<p class="uk-margin-remove-top">{{ .Post.Caption }}</p>
 			<hr>
         {{ range .Post.Comments }}
-            {{ template "comment" dict "Post" . "UserID" $.UserID }}
+            {{ template "comment" dict "Post" . "User" $.User }}
 						<hr>
         {{ end}}
 			<form data-comment-post>

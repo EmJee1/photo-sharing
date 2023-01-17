@@ -17,7 +17,7 @@
 			<div class="uk-child-width-1-2@s uk-child-width-1-3@m"
 					 uk-scrollspy="target: > div; cls: uk-animation-fade; delay: 50" uk-grid>
           {{ range .feed }}
-              {{ template "post" dict "Post" . "UserID" $.userId }}
+              {{ template "post" dict "Post" . "User" $.user }}
           {{ else }}
 						<p>Je feed is nog leeg</p>
           {{ end }}

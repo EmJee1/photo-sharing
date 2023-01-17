@@ -21,8 +21,8 @@ var GoviewConfig = goview.Config{
 			}
 			return false
 		},
-		"canDeleteComment": func(comment model.Comment, userId uint) bool {
-			return comment.UserID == userId
+		"canDeleteComment": func(comment model.Comment, user model.User) bool {
+			return comment.UserID == user.ID
 		},
 		"canDeletePost": func(post model.Post, userId uint) bool {
 			return post.UserID == userId
