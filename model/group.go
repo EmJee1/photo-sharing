@@ -7,4 +7,5 @@ type Group struct {
 	Posts       []Post
 	Users       []User `gorm:"many2many:group_users;"`
 	Invites     []Invite
+	IsAdmin     string `gorm:"-"`
 }

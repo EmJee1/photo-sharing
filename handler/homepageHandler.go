@@ -28,9 +28,8 @@ func GetHomepage(context echo.Context) error {
 	}
 
 	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
-		"title":  "Overview",
-		"user":   user,
-		"feed":   feed,
-		"userId": userId,
+		"title": "Overview",
+		"user":  user,
+		"feed":  feed,
 	})
 }
