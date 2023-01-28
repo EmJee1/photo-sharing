@@ -29,8 +29,13 @@ var GoviewConfig = goview.Config{
 			}
 			return comment.UserID == user.ID
 		},
-		"canDeletePost": func(post model.Post, userId uint) bool {
-			return post.UserID == userId
+		"canDeletePost": func(post model.Post, user model.User) bool {
+			for _, groupId := range user.IsAdminIn {
+				if groupId == post.GroupID {
+					return true
+				}
+			}
+			return post.UserID == user.ID
 		},
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			dict := make(map[string]interface{}, len(values)/2)

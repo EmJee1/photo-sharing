@@ -14,7 +14,7 @@
 							<time datetime="{{ .Post.CreatedAt }}">{{ .Post.CreatedAt.Format "02 Jan, 2006" }}</time>
 						</p>
 					</div>
-            {{ if canDeletePost .Post .User.ID }}
+            {{ if canDeletePost .Post .User }}
 							<div class="uk-width-auto uk-margin-auto-left">
 								<button class="uk-icon-link uk-button uk-button-text" type="button">
 									<span uk-icon="more"></span>
