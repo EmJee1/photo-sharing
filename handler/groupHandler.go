@@ -8,6 +8,7 @@ import (
 	"photo-sharing/db"
 	"photo-sharing/model"
 	"photo-sharing/repository"
+	"sort"
 	"strconv"
 )
 
@@ -20,6 +21,10 @@ func GetGroup(context echo.Context) error {
 
 	group := &model.Group{}
 	repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments."+clause.Associations, "Posts."+clause.Associations)
+
+	sort.Slice(group.Posts, func(i, j int) bool {
+		return group.Posts[i].CreatedAt.After(group.Posts[j].CreatedAt)
+	})
 
 	return echoview.Render(context, http.StatusOK, "group", echo.Map{
 		"title": group.Name,

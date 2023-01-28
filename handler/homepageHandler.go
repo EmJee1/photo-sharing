@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"photo-sharing/model"
 	"photo-sharing/repository"
+	"sort"
 )
 
 func GetHomepage(context echo.Context) error {
@@ -26,6 +27,10 @@ func GetHomepage(context echo.Context) error {
 			feed = append(feed, post)
 		}
 	}
+
+	sort.Slice(feed, func(i, j int) bool {
+		return feed[i].CreatedAt.After(feed[j].CreatedAt)
+	})
 
 	return echoview.Render(context, http.StatusOK, "homepage", echo.Map{
 		"title": "Overview",
