@@ -240,6 +240,11 @@ const fetchInvites = async () => {
 }
 
 const getInvites = async () => {
+	if (['/login', '/register'].includes(window.location.pathname)) {
+		clearCacheInvites()
+		return
+	}
+
 	let invites = getCacheInvites()
 	if (!invites) {
 		invites = await fetchInvites()
