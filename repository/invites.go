@@ -24,6 +24,10 @@ func GetInvites(userId uint, dest interface{}, preloads ...string) error {
 	return query.Find(dest).Error
 }
 
+func CreateInvite(invite *model.Invite) error {
+	return db.DB.Create(invite).Error
+}
+
 func DeleteInvite(inviteId uint) error {
 	return db.DB.Delete(&model.Invite{}, inviteId).Error
 }

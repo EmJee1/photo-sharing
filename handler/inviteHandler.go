@@ -3,7 +3,6 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/dto"
 	"photo-sharing/model"
 	"photo-sharing/repository"
@@ -45,8 +44,11 @@ func PostInvite(context echo.Context) error {
 		})
 	}
 
-	invite := model.Invite{GroupID: uint(groupId), UserID: uint(user.ID), InvitedByID: invitedById}
-	db.DB.Create(&invite)
+	repository.CreateInvite(&model.Invite{
+		GroupID:     uint(groupId),
+		UserID:      user.ID,
+		InvitedByID: invitedById,
+	})
 
 	return context.JSON(http.StatusOK, dto.SuccessResponse{
 		Ok: true,
