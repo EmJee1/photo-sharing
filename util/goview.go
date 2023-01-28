@@ -22,6 +22,11 @@ var GoviewConfig = goview.Config{
 			return false
 		},
 		"canDeleteComment": func(comment model.Comment, user model.User) bool {
+			for _, groupId := range user.IsAdminIn {
+				if groupId == comment.Post.GroupID {
+					return true
+				}
+			}
 			return comment.UserID == user.ID
 		},
 		"canDeletePost": func(post model.Post, userId uint) bool {

@@ -16,7 +16,7 @@ func GetHomepage(context echo.Context) error {
 	repository.GetUser(
 		userId,
 		&user,
-		"Groups.Posts.Comments.User",
+		"Groups.Posts.Comments."+clause.Associations,
 		"Groups.Posts."+clause.Associations,
 	)
 

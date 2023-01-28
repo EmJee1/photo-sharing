@@ -7,6 +7,7 @@ import (
 	"photo-sharing/dto"
 	"photo-sharing/model"
 	"photo-sharing/repository"
+	"photo-sharing/util"
 	"strconv"
 )
 
@@ -39,13 +40,14 @@ func DeleteComment(context echo.Context) error {
 	userId := context.Get("userId").(uint)
 	commentId, _ := strconv.ParseUint(context.FormValue("commentId"), 10, 64)
 
+	var userIsAdminIn []uint
 	comment := &model.Comment{}
 	repository.GetComment(uint(commentId), &comment, "Post")
+	repository.GetGroupsUserIsAdminOf(userId, &userIsAdminIn)
 
-	var isGroupUser bool
-	repository.UserIsGroupMember(userId, comment.Post.GroupID, &isGroupUser)
+	isAdminUser := util.Contains(userIsAdminIn, comment.Post.GroupID)
 
-	if !isGroupUser || comment.UserID != userId {
+	if !(isAdminUser || comment.UserID == userId) {
 		return context.JSON(http.StatusForbidden, dto.ErrorResponse{
 			Ok:    false,
 			Error: "Je hebt geen rechten om die comment te verwijderen",

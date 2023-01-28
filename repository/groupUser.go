@@ -5,19 +5,13 @@ import (
 	"photo-sharing/model"
 )
 
-func GetGroupsUserIsAdminOf(userId uint) []uint {
+func GetGroupsUserIsAdminOf(userId uint, dest *[]uint) error {
 	var groupUsers []model.GroupUser
-	db.DB.
-		Model(&model.GroupUser{}).
-		Where("user_id = ? AND is_admin = ?", userId, true).
-		Find(&groupUsers)
+	err := db.DB.Where("user_id = ? AND is_admin = ?", userId, true).Find(&groupUsers).Error
 
-	var groups []uint
 	for _, groupUser := range groupUsers {
-		if groupUser.IsAdmin {
-			groups = append(groups, groupUser.GroupID)
-		}
+		*dest = append(*dest, groupUser.GroupID)
 	}
 
-	return groups
+	return err
 }

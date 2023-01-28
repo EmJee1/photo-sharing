@@ -19,7 +19,7 @@ func GetGroup(context echo.Context) error {
 	repository.GetUser(userId, &user)
 
 	group := &model.Group{}
-	repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments.User", "Posts."+clause.Associations)
+	repository.GetGroup(uint(groupId), &group, "Users", "Invites.User", "Posts.Comments."+clause.Associations, "Posts."+clause.Associations)
 
 	return echoview.Render(context, http.StatusOK, "group", echo.Map{
 		"title": group.Name,
