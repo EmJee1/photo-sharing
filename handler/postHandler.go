@@ -3,7 +3,6 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/dto"
 	"photo-sharing/model"
 	"photo-sharing/repository"
@@ -18,15 +17,21 @@ func PostPost(context echo.Context) error {
 
 	file, err := context.FormFile("image")
 	if err != nil {
-		return err
+		return context.JSON(http.StatusUnprocessableEntity, dto.ErrorResponse{
+			Ok:    false,
+			Error: "De foto is niet aanwezig",
+		})
 	}
 
 	filepath, err := util.UploadImage(file)
 	if err != nil {
-		return err
+		return context.JSON(http.StatusUnprocessableEntity, dto.ErrorResponse{
+			Ok:    false,
+			Error: err.Error(),
+		})
 	}
 
-	db.DB.Create(&model.Post{
+	repository.CreatePost(&model.Post{
 		Caption:  caption,
 		UserID:   userId,
 		Filepath: filepath,
@@ -55,8 +60,7 @@ func DeletePost(context echo.Context) error {
 		})
 	}
 
-	db.DB.Delete(model.Post{ID: uint(postId)})
-
+	repository.DeletePost(uint(postId))
 	return context.JSON(http.StatusOK, dto.SuccessResponse{
 		Ok: true,
 	})

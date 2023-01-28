@@ -23,3 +23,7 @@ func AddUserToGroup(groupId uint, userId uint) error {
 		Append(&model.User{ID: userId})
 	return err
 }
+
+func CreateGroup(group *model.Group) error {
+	return db.DB.Create(group).Error
+}

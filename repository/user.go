@@ -32,3 +32,7 @@ func UserIsGroupMember(userId uint, groupId uint, dest interface{}) error {
 		Find(dest).
 		Error
 }
+
+func CreateUser(user *model.User) error {
+	return db.DB.Create(user).Error
+}

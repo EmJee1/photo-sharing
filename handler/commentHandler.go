@@ -3,7 +3,6 @@ package handler
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/dto"
 	"photo-sharing/model"
 	"photo-sharing/repository"
@@ -29,7 +28,11 @@ func PostComment(context echo.Context) error {
 		})
 	}
 
-	db.DB.Create(&model.Comment{UserID: userId, Body: body, PostID: uint(postId)})
+	repository.CreateComment(&model.Comment{
+		UserID: userId,
+		Body:   body,
+		PostID: uint(postId),
+	})
 
 	return context.JSON(http.StatusCreated, dto.SuccessResponse{
 		Ok: true,
@@ -54,7 +57,7 @@ func DeleteComment(context echo.Context) error {
 		})
 	}
 
-	db.DB.Delete(&model.Comment{ID: uint(commentId)})
+	repository.DeleteComment(uint(commentId))
 	return context.JSON(http.StatusOK, dto.SuccessResponse{
 		Ok: true,
 	})

@@ -4,8 +4,8 @@ import (
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/model"
+	"photo-sharing/repository"
 	"photo-sharing/util"
 )
 
@@ -29,7 +29,11 @@ func PostRegister(context echo.Context) error {
 		})
 	}
 
-	err = db.DB.Create(&model.User{Email: email, Password: passwordHash, Username: username}).Error
+	err = repository.CreateUser(&model.User{
+		Email:    email,
+		Password: passwordHash,
+		Username: username,
+	})
 	if err != nil {
 		return echoview.Render(context, http.StatusBadRequest, "register", echo.Map{
 			"error":      "Controleer de velden en probeer opnieuw",

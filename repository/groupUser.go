@@ -15,3 +15,7 @@ func GetGroupsUserIsAdminOf(userId uint, dest *[]uint) error {
 
 	return err
 }
+
+func CreateGroupUser(groupUser *model.GroupUser) error {
+	return db.DB.Create(&groupUser).Error
+}

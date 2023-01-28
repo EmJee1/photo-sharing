@@ -5,7 +5,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm/clause"
 	"net/http"
-	"photo-sharing/db"
 	"photo-sharing/model"
 	"photo-sharing/repository"
 	"sort"
@@ -39,10 +38,13 @@ func PostGroup(context echo.Context) error {
 	userId := context.Get("userId").(uint)
 
 	group := model.Group{Name: name, Description: description}
-	db.DB.Create(&group)
+	repository.CreateGroup(&group)
 
-	groupUser := model.GroupUser{UserID: userId, GroupID: group.ID, IsAdmin: true}
-	db.DB.Create(&groupUser)
+	repository.CreateGroupUser(&model.GroupUser{
+		UserID:  userId,
+		GroupID: group.ID,
+		IsAdmin: true,
+	})
 
 	context.Redirect(http.StatusSeeOther, "/")
 	return nil

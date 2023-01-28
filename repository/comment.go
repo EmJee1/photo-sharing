@@ -14,3 +14,11 @@ func GetComment(commentId uint, dest interface{}, preloads ...string) error {
 
 	return query.First(dest, commentId).Error
 }
+
+func CreateComment(comment *model.Comment) error {
+	return db.DB.Create(comment).Error
+}
+
+func DeleteComment(commentId uint) error {
+	return db.DB.Delete(&model.Comment{}, commentId).Error
+}
