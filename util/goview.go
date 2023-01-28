@@ -37,6 +37,9 @@ var GoviewConfig = goview.Config{
 			}
 			return post.UserID == user.ID
 		},
+		"containsUint": func(slice []uint, el uint) bool {
+			return Contains(slice, el)
+		},
 		"dict": func(values ...interface{}) (map[string]interface{}, error) {
 			dict := make(map[string]interface{}, len(values)/2)
 			for i := 0; i < len(values); i += 2 {
