@@ -1,12 +1,11 @@
 package repository
 
 import (
-	"photo-sharing/db"
 	"photo-sharing/model"
 )
 
 func GetUser(userId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.Model(&model.User{})
+	query := connection().Model(&model.User{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
@@ -16,7 +15,7 @@ func GetUser(userId uint, dest interface{}, preloads ...string) error {
 }
 
 func GetUserByEmail(email string, dest interface{}) error {
-	err := db.DB.
+	err := connection().
 		Model(&model.User{}).
 		Where("email = ?", email).
 		First(dest).
@@ -25,7 +24,7 @@ func GetUserByEmail(email string, dest interface{}) error {
 }
 
 func UserIsGroupMember(userId uint, groupId uint, dest interface{}) error {
-	return db.DB.
+	return connection().
 		Select("count(*) > 0").
 		Table("group_users").
 		Where("user_id = ? AND group_id = ?", userId, groupId).
@@ -34,5 +33,5 @@ func UserIsGroupMember(userId uint, groupId uint, dest interface{}) error {
 }
 
 func CreateUser(user *model.User) error {
-	return db.DB.Create(user).Error
+	return connection().Create(user).Error
 }

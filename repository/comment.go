@@ -1,12 +1,11 @@
 package repository
 
 import (
-	"photo-sharing/db"
 	"photo-sharing/model"
 )
 
 func GetComment(commentId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.Model(&model.Comment{})
+	query := connection().Model(&model.Comment{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
@@ -16,9 +15,9 @@ func GetComment(commentId uint, dest interface{}, preloads ...string) error {
 }
 
 func CreateComment(comment *model.Comment) error {
-	return db.DB.Create(comment).Error
+	return connection().Create(comment).Error
 }
 
 func DeleteComment(commentId uint) error {
-	return db.DB.Delete(&model.Comment{}, commentId).Error
+	return connection().Delete(&model.Comment{}, commentId).Error
 }

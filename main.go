@@ -4,7 +4,6 @@ import (
 	"github.com/foolin/goview/supports/echoview-v4"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
-	"photo-sharing/db"
 	"photo-sharing/handler"
 	"photo-sharing/middleware"
 	"photo-sharing/util"
@@ -24,12 +23,6 @@ func main() {
 	e.Static("/css", "static/css")
 	e.Static("/js", "static/js")
 	e.Static("/uploads", "uploads")
-
-	if err := db.Open(); err != nil {
-		e.Logger.Fatal("Could not connect to database")
-	}
-
-	db.AutoMigrate()
 
 	e.GET("/", handler.GetHomepage, middleware.IsAuthenticated)
 	e.GET("/login", handler.GetLogin)

@@ -1,15 +1,14 @@
-package db
+package repository
 
 import (
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 	"os"
 	"photo-sharing/model"
 )
 
-var DB *gorm.DB
+var _connection *gorm.DB
 
 func getDsn() string {
 	host := os.Getenv("DB_HOST")
@@ -20,20 +19,21 @@ func getDsn() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, name, port)
 }
 
-func Open() error {
+func connection() *gorm.DB {
+	if _connection != nil {
+		return _connection
+	}
+
 	db, err := gorm.Open(postgres.Open(getDsn()), &gorm.Config{})
 	if err != nil {
-		return err
+		panic("Database connection failed: " + err.Error())
 	}
 
-	DB = db
-
-	return nil
-}
-
-func AutoMigrate() {
-	err := DB.AutoMigrate(&model.User{}, &model.Group{}, &model.GroupUser{}, &model.Invite{}, &model.Post{}, &model.Comment{})
-	if err != nil {
-		log.Fatal("Failed to execute auto-migrate on DB" + err.Error())
+	if err := db.AutoMigrate(&model.User{}, &model.Group{}, &model.GroupUser{}, &model.Invite{}, &model.Post{}, &model.Comment{}); err != nil {
+		panic("Database automigrate failed: " + err.Error())
 	}
+
+	_connection = db
+
+	return db
 }

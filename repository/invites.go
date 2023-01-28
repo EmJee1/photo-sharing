@@ -1,19 +1,18 @@
 package repository
 
 import (
-	"photo-sharing/db"
 	"photo-sharing/model"
 )
 
 func GetInvite(inviteId uint, dest interface{}) error {
-	return db.DB.
+	return connection().
 		Model(&model.Invite{}).
 		First(dest, inviteId).
 		Error
 }
 
 func GetInvites(userId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.
+	query := connection().
 		Model(&model.Invite{}).
 		Where("user_id = ?", userId)
 
@@ -25,9 +24,9 @@ func GetInvites(userId uint, dest interface{}, preloads ...string) error {
 }
 
 func CreateInvite(invite *model.Invite) error {
-	return db.DB.Create(invite).Error
+	return connection().Create(invite).Error
 }
 
 func DeleteInvite(inviteId uint) error {
-	return db.DB.Delete(&model.Invite{}, inviteId).Error
+	return connection().Delete(&model.Invite{}, inviteId).Error
 }

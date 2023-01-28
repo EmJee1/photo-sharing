@@ -1,12 +1,11 @@
 package repository
 
 import (
-	"photo-sharing/db"
 	"photo-sharing/model"
 )
 
 func GetGroup(groupId uint, dest interface{}, preloads ...string) error {
-	query := db.DB.Model(&model.Group{})
+	query := connection().Model(&model.Group{})
 
 	for _, p := range preloads {
 		query = query.Preload(p)
@@ -16,14 +15,13 @@ func GetGroup(groupId uint, dest interface{}, preloads ...string) error {
 }
 
 func AddUserToGroup(groupId uint, userId uint) error {
-	err := db.DB.
+	return connection().
 		Model(&model.Group{ID: groupId}).
 		Where("id = ?", groupId).
 		Association("Users").
 		Append(&model.User{ID: userId})
-	return err
 }
 
 func CreateGroup(group *model.Group) error {
-	return db.DB.Create(group).Error
+	return connection().Create(group).Error
 }
