@@ -36,7 +36,11 @@
 										<div class="uk-width-auto">
                         {{ template "userIcon" dict "Username" .Username "Dimensions" "30" }}
 										</div>
-										<p class="uk-margin-remove text-overflow-dots">{{ .Username }} ({{ .Email }})</p>
+										<p class="uk-margin-remove text-overflow-dots">{{ .Username }}
+                        {{ if containsUint .IsAdminIn $.group.ID }}
+													<span class="uk-badge">Beheerder</span>
+                        {{ end }}
+										</p>
 									</li>
                 {{ end }}
 						</ul>
