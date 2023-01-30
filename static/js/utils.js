@@ -76,12 +76,18 @@ const attachCreatePostListeners = () => {
 		await createCropper(previewImage)
 	})
 
-	postImageForm.addEventListener('submit', async e => {
+	postImageForm.addEventListener('submit', e => {
 		e.preventDefault()
+		const lottiePlayer = document.querySelector('[data-post-upload-loader]')
+		lottiePlayer.load('https://assets2.lottiefiles.com/temp/lf20_xYfV1x.json')
+		document.querySelector('[data-post-upload-form]').style.display = 'none'
 		cropper.getCroppedCanvas().toBlob(async blob => {
 			const formData = new FormData(e.target)
 			formData.set('image', blob, 'img.png')
-			await apiRequest('post', formData, 'POST')
+			// give some time for the animation to show
+			setTimeout(async () => {
+				await apiRequest('post', formData, 'POST')
+			}, 350)
 		})
 	})
 }

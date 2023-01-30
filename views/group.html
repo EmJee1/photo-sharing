@@ -107,31 +107,34 @@
 
 	<div id="create-post" uk-modal>
 		<div class="uk-modal-dialog uk-modal-body">
-			<h2 class="uk-modal-title">Post maken</h2>
-			<form id="post-image-form" enctype='multipart/form-data'>
-				<input name="groupId" type="hidden" value="{{ .group.ID }}">
-				<div class="uk-margin">
-					<label class="uk-form-label" for="caption">Bijschrift</label>
-					<input class="uk-input" type="caption" name="caption" id="caption">
-				</div>
-				<div class="uk-margin">
-					<div id="post-image-container" class="js-upload uk-placeholder uk-text-center">
-						<span uk-icon="icon: cloud-upload"></span>
-						<span class="uk-text-middle">Upload een foto door hem hier te slepen of</span>
-						<div uk-form-custom>
-							<input type="file" name="image" id="post-image-input" required>
-							<span class="uk-link">selecteer er een</span>
+			<lottie-player data-post-upload-loader style="display: none" speed="1" loop autoplay></lottie-player>
+			<div data-post-upload-form>
+				<h2 class="uk-modal-title">Post maken</h2>
+				<form id="post-image-form" enctype='multipart/form-data'>
+					<input name="groupId" type="hidden" value="{{ .group.ID }}">
+					<div class="uk-margin">
+						<label class="uk-form-label" for="caption">Bijschrift</label>
+						<input class="uk-input" type="caption" name="caption" id="caption">
+					</div>
+					<div class="uk-margin">
+						<div id="post-image-container" class="js-upload uk-placeholder uk-text-center">
+							<span uk-icon="icon: cloud-upload"></span>
+							<span class="uk-text-middle">Upload een foto door hem hier te slepen of</span>
+							<div uk-form-custom>
+								<input type="file" name="image" id="post-image-input" required>
+								<span class="uk-link">selecteer er een</span>
+							</div>
+						</div>
+						<div id="post-image-preview" style="display: none">
+							<img class="uk-inline uk-display-block" src="" alt="post image preview">
 						</div>
 					</div>
-					<div id="post-image-preview" style="display: none">
-						<img class="uk-inline uk-display-block" src="" alt="post image preview">
+					<div class="uk-text-right">
+						<button class="uk-button uk-button-default uk-modal-close">Cancel</button>
+						<button class="uk-button uk-button-primary" type="submit">Save</button>
 					</div>
-				</div>
-				<div class="uk-text-right">
-					<button class="uk-button uk-button-default uk-modal-close">Cancel</button>
-					<button class="uk-button uk-button-primary" type="submit">Save</button>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 
