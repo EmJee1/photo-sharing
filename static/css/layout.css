@@ -39,6 +39,10 @@
 	margin: 0;
 }
 
+.pointer-events-none {
+	pointer-events: none;
+}
+
 @keyframes heartbeat {
 	from {
 		scale: 1;
