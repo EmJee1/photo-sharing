@@ -40,8 +40,8 @@
 			</div>
 
 			<div class="uk-card-body uk-padding-small">
-				<div class="post-actions">
-					<button class="post-action {{ if userLikedPost .User.ID .Post }}active{{ end }}"
+				<div class="icon-button-group">
+					<button class="icon-button {{ if userLikedPost .User.ID .Post }}active{{ end }}"
 									data-like-post="{{ .Post.ID }}">
 						<span uk-icon="icon: triangle-up"></span>
 						<span data-like-count>
@@ -49,7 +49,7 @@
 						</span>
 					</button>
 					<hr class="uk-divider-vertical">
-					<button class="post-action active" uk-toggle="target: #offcanvas-comments-{{ .Post.ID }}">
+					<button class="icon-button active" uk-toggle="target: #offcanvas-comments-{{ .Post.ID }}">
 						<span uk-icon="icon: comments"></span>
               {{ len .Post.Comments }}
 					</button>

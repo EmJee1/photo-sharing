@@ -14,13 +14,13 @@
 	animation: heartbeat 2s ease-in-out alternate infinite;
 }
 
-.post-actions {
+.icon-button-group {
 	display: flex;
 	justify-content: flex-start;
 	gap: 1rem;
 }
 
-.post-action {
+.icon-button {
 	border: none;
 	background: transparent;
 	cursor: pointer;
@@ -30,11 +30,11 @@
 	color: #999;
 }
 
-.post-action.active {
+.icon-button.active {
 	color: black;
 }
 
-.post-actions > hr {
+.icon-button-group > hr {
 	height: auto;
 	margin: 0;
 }
