@@ -41,6 +41,28 @@
 													<span class="uk-badge">Beheerder</span>
                         {{ end }}
 										</p>
+										<div class="uk-margin-auto-left icon-button-group">
+											<div class="uk-inline">
+												<button class="icon-button active" data-group="{{ $.group.ID }}" data-user="{{ .ID }}"
+																data-make-admin>
+													<span uk-icon="icon: bolt"></span>
+												</button>
+												<div class="uk-card uk-card-body uk-card-default uk-card-small uk-width-max-content"
+														 uk-drop="mode: hover; pos: bottom-center">
+													Beheerder maken
+												</div>
+											</div>
+											<div class="uk-inline">
+												<button class="icon-button active" data-group="{{ $.group.ID }}" data-user="{{ .ID }}"
+																data-kick-user>
+													<span uk-icon="icon: ban"></span>
+												</button>
+												<div class="uk-card uk-card-body uk-card-default uk-card-small uk-width-max-content"
+														 uk-drop="mode: hover; pos: bottom-center">
+													Uit de groep verwijderen
+												</div>
+											</div>
+										</div>
 									</li>
                 {{ end }}
 						</ul>

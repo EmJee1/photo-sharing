@@ -181,6 +181,32 @@ const attachDeleteListeners = () => {
 }
 attachDeleteListeners()
 
+const attachKickUserListeners = () => {
+	const kickUserBtns = document.querySelectorAll('[data-kick-user]')
+	kickUserBtns.forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const formData = new FormData()
+			formData.append('userId', btn.getAttribute('data-user'))
+			formData.append('groupId', btn.getAttribute('data-group'))
+			await apiRequest('kick', formData, 'POST')
+		})
+	})
+}
+attachKickUserListeners()
+
+const attachMakeAdminListeners = () => {
+	const makeAdminBtns = document.querySelectorAll('[data-make-admin]')
+	makeAdminBtns.forEach(btn => {
+		btn.addEventListener('click', async () => {
+			const formData = new FormData()
+			formData.append('userId', btn.getAttribute('data-user'))
+			formData.append('groupId', btn.getAttribute('data-group'))
+			await apiRequest('promote', formData, 'POST')
+		})
+	})
+}
+attachMakeAdminListeners()
+
 const respondToInvite = async (accept, inviteId) => {
 	clearCacheInvites()
 	const formData = new FormData()

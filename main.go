@@ -39,6 +39,8 @@ func main() {
 
 	api.POST("/post", handler.PostPost, middleware.IsAuthenticated, middleware.IsGroupUser)
 	api.DELETE("/post", handler.DeletePost, middleware.IsAuthenticated)
+	api.POST("/kick", handler.PostKick, middleware.IsAuthenticated, middleware.IsGroupAdmin)
+	api.POST("/promote", handler.PostPromote, middleware.IsAuthenticated, middleware.IsGroupAdmin)
 	api.GET("/invite", handler.GetInvites, middleware.IsAuthenticated)
 	api.POST("/invite", handler.PostInvite, middleware.IsAuthenticated, middleware.IsGroupUser)
 	api.POST("/invite/respond", handler.PostInviteRespond, middleware.IsAuthenticated)

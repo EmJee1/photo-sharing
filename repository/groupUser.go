@@ -18,3 +18,18 @@ func GetGroupsUserIsAdminOf(userId uint, dest *[]uint) error {
 func CreateGroupUser(groupUser *model.GroupUser) error {
 	return connection().Create(&groupUser).Error
 }
+
+func DeleteGroupUser(userId, groupId uint) error {
+	return connection().
+		Where("user_id = ? AND group_id = ?", userId, groupId).
+		Delete(&model.GroupUser{}).
+		Error
+}
+
+func UpdateGroupUserAdminStatus(userId, groupId uint, isAdmin bool) error {
+	return connection().
+		Model(&model.GroupUser{}).
+		Where("user_id = ? AND group_id = ?", userId, groupId).
+		Update("is_admin", isAdmin).
+		Error
+}
