@@ -24,10 +24,7 @@ func PostPromote(context echo.Context) error {
 		})
 	}
 
-	err := repository.UpdateGroupUserAdminStatus(uint(userIdToPromote), uint(groupId), true)
-	if err != nil {
-		return err
-	}
+	repository.UpdateGroupUserAdminStatus(uint(userIdToPromote), uint(groupId), true)
 	return context.JSON(http.StatusOK, dto.SuccessResponse{
 		Ok: true,
 	})
