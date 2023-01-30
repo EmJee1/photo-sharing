@@ -37,6 +37,16 @@ var GoviewConfig = goview.Config{
 			}
 			return post.UserID == user.ID
 		},
+		"canKickUser": func(userToKick, user model.User, groupId uint) bool {
+			userToKickIsAdmin := Contains(userToKick.IsAdminIn, groupId)
+			isAdmin := Contains(user.IsAdminIn, groupId)
+			return !userToKickIsAdmin && isAdmin
+		},
+		"canPromoteUser": func(userToPromote, user model.User, groupId uint) bool {
+			userToPromoteIsAdmin := Contains(userToPromote.IsAdminIn, groupId)
+			isAdmin := Contains(user.IsAdminIn, groupId)
+			return !userToPromoteIsAdmin && isAdmin
+		},
 		"containsUint": func(slice []uint, el uint) bool {
 			return Contains(slice, el)
 		},
