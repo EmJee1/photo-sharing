@@ -99,7 +99,15 @@
 					</div>
 				</form>
 			</li>
-			<li data-tab-index="2">
+			<li data-tab-index="2" uk-filter="target: .comment-statistics; animation: fade">
+				<ul class="uk-subnav uk-subnav-pill">
+					<li class="uk-active" uk-filter-control="sort: data-comment-count; order: desc">
+						<a href="#">Aflopend</a>
+					</li>
+					<li uk-filter-control="sort: data-comment-count">
+						<a href="#">Oplopend</a>
+					</li>
+				</ul>
 				<table class="uk-table uk-table-striped">
 					<thead>
 					<tr>
@@ -107,9 +115,9 @@
 						<th>Aantal comments</th>
 					</tr>
 					</thead>
-					<tbody>
+					<tbody class="comment-statistics">
           {{ range $key, $value := .commentStats }}
-						<tr>
+						<tr data-comment-count="{{ $value.CommentCount }}">
 							<td>
                   {{ template "userIcon" dict "Username" $value.User.Username "Dimensions" "30" }}
 								<span class="uk-margin-small-left">
