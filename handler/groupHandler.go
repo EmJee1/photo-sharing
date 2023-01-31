@@ -25,10 +25,28 @@ func GetGroup(context echo.Context) error {
 		return group.Posts[i].CreatedAt.After(group.Posts[j].CreatedAt)
 	})
 
+	type commentStat struct {
+		CommentCount int
+		User         model.User
+	}
+	commentStatistics := map[uint]commentStat{}
+	for _, post := range group.Posts {
+		for _, comment := range post.Comments {
+			_, ok := commentStatistics[comment.UserID]
+			if !ok {
+				commentStatistics[comment.UserID] = commentStat{CommentCount: 1, User: comment.User}
+			} else {
+				newCount := commentStatistics[comment.UserID].CommentCount + 1
+				commentStatistics[comment.UserID] = commentStat{CommentCount: newCount, User: comment.User}
+			}
+		}
+	}
+
 	return echoview.Render(context, http.StatusOK, "group", echo.Map{
-		"title": group.Name,
-		"group": group,
-		"user":  user,
+		"title":        group.Name,
+		"group":        group,
+		"user":         user,
+		"commentStats": commentStatistics,
 	})
 }
 

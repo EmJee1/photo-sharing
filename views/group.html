@@ -100,7 +100,27 @@
 				</form>
 			</li>
 			<li data-tab-index="2">
-				Statistics
+				<table class="uk-table uk-table-striped">
+					<thead>
+					<tr>
+						<th>Gebruiker</th>
+						<th>Aantal comments</th>
+					</tr>
+					</thead>
+					<tbody>
+          {{ range $key, $value := .commentStats }}
+						<tr>
+							<td>
+                  {{ template "userIcon" dict "Username" $value.User.Username "Dimensions" "30" }}
+								<span class="uk-margin-small-left">
+                  {{ $value.User.Username }}
+								</span>
+							</td>
+							<td>{{ $value.CommentCount }}</td>
+						</tr>
+          {{ end }}
+					</tbody>
+				</table>
 			</li>
 		</ul>
 	</div>
